@@ -1,15 +1,11 @@
 #James Elliott
 #9/18/2020
-
+#__version__ == '2.0'
 #Primary Script to all projects
 #FINAL VERSION --- put all calls here so that javascript can communicate with this file
 
-import os
-import sys
-import re
-
 from OCRLibrary.TextExtractorMain import textExtracMain
-from AutoCount.AutocountMain import run_counts
+from AutoCount.AutocountMain import count
 
 
 #FINAL VERSION --- one script for autocount & text_count --> allows shared project name
@@ -18,21 +14,20 @@ project = r"5637_Madesto_Courthouse"
 #current version only works with text_counting
 division = r"Data_Floor"
 
-###AutoCount###
-#Must run first for new projects--> run_counts(project)#
+###LOAD PROJECT###
+AutoCount_Class = count()
+working_dir = AutoCount_Class.create_project(project)
 
-run_counts(project)
+###AutoCount###
+AutoCount_Class.run_counts(working_dir,is_dir=True)
 
 ###TEXT EXTRACTOR###
-
 #textExtracMain(project, division)
 
-
 ###OCR###
-
+#not existing yet
 
 ###TO DO LIST###
-#1. Convert AutoCountMain into a singular class (AutoMainCount)
 #2 Add image_search_dimensions for cropping out edges (AutoMainCount)
 #3 Add text window to ignore edges (TextExtractormain)
 #4 add in ' # ', so you can find only numbers that are by themselves (TextExtractormain)
