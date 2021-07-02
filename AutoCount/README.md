@@ -1,3 +1,2 @@
-# AutoCount
-#Construction Takeoff Software
-#primary Directory for Counting Software
+# AutoCount --- Construction Takeoff Software
+## primary Directory for OCR Counting Software
