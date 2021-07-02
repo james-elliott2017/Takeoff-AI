@@ -118,19 +118,15 @@ def MainTextExtractor(text_folder,csv_save_folder,searchable_list,ratio = False)
 		#######RATIO CODE############RATIO FUNCTION TO HANDLE ROOM SCALING
 		if ratio != False:
 			##############################FIX LATER --- NEEDS TO TAKE RATIO, MULITPLY, RETURN, AND THAN BE NEW SAVED
-			str1 = ratio
 			
 			####INPUT EXAMPLE ONLY#############################
 			#ratio = {'A1':15,'A2':2,'A3':3,'B1':6,'B2':2,'B3':8,'C1':1}
-
-			tmp_list = []
-			if file.find(str1) != -1:
 				#print("FILE:",file)
-				for key in ratio:
-					if file.find(key) != -1:
-						#print(n)
-						#print(ratio[key])
-						d = ratioManipulator(d, ratio[key])
+			for key in ratio:
+				if file.find(key) != -1:
+					#print(n)
+					#print(ratio[key])
+					d = ratioManipulator(d, ratio[key])
 			##################################################
 
 		#print(d)
@@ -223,7 +219,8 @@ def textExtracMain(Project,division):
 		#############################################
 		#lowVoltage
 		#print(Constants.words.LowVoltage)
-		keyWords = Constants.words.LowVoltage
+		keyWords = Constants.words.data
+			#tmp_ratio = {"0_":3,"8_":3,"10_":2,"11_":4}
 ################################################################################################################
 		MainTextExtractor(text_folder, csv_save_folder,keyWords)
 	except:
@@ -232,6 +229,8 @@ def textExtracMain(Project,division):
 		divisionCreator(txtMainDir, division)
 		#FINAL VERSION --- put divisionCreator() in same .py as project creator for orginization
 		print("path created\nPlease Rerun Script")
+
+
 
 if __name__ == "__main__":
 	project = r"6082 Sunnyville Civic Center"

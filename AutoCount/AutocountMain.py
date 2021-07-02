@@ -107,7 +107,7 @@ def intersected(bottom_left1, top_right1, bottom_left2, top_right2):
     if top_right1[1] < bottom_left2[1] or bottom_left1[1] > top_right2[1]:
         return 0
 
-    return 1
+    return True
 
 def visual_updater(image,loc,squareColor,w,h):
 	"""
@@ -138,7 +138,7 @@ def image_rotator_templateMatch(picture, template):
 	###########################################
 	angle_iteration = 90 #changes how much the picture rotates per rotation
 	#^Unless Noted DO NOT Change^#
-	threshold = 0.75 #accuracy threshold
+	threshold = 0.80 #accuracy threshold
 	#########################################
 	for angle in np.arange(0,360,angle_iteration):
 		#print("angle:",angle)
