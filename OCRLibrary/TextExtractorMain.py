@@ -104,7 +104,7 @@ def MainTextExtractor(text_folder,csv_save_folder,searchable_list,ratio = False)
 		j = pdfExtractor(total_addy)
 		#print(j)
 		
-		d = {} #d = dictionary
+		d = {}
 		#print("LIST:\n", searchable_list)
 		for item in searchable_list:
 			count = 0

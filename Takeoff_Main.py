@@ -9,7 +9,7 @@ from AutoCount.AutocountMain import count
 
 
 #FINAL VERSION --- one script for autocount & text_count --> allows shared project name
-project = r"5637_Madesto_Courthouse"
+project = r"5638_NAVFAC"
 
 #current version only works with text_counting
 division = r"Data_Floor"
@@ -19,10 +19,10 @@ AutoCount_Class = count()
 working_dir = AutoCount_Class.create_project(project)
 
 ###AutoCount###
-AutoCount_Class.run_counts(working_dir,is_dir=True)
+#AutoCount_Class.run_counts(working_dir,is_dir=True)
 
 ###TEXT EXTRACTOR###
-#textExtracMain(project, division)
+textExtracMain(project, division)
 
 ###OCR###
 #not existing yet
