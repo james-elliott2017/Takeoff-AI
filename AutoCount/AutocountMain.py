@@ -27,7 +27,7 @@ class count:
 		self.project_folder_names = ["symbol_images","plans_images","highlights_final","TextExtractor_files","Misc_Files"]
 		self.primary_directory = (r"C:\Users\james\OneDrive\Documents\Coding Projects\Python Projects\Takeoff AI\Walker Projects")
 
-		#Matching Variables
+		#Matching Variables CAN be changed if you wish
 		self.angle_iteration = 90
 		self.threshold = 0.80
 	def __black_filter(self, image_location,location = False):
@@ -74,23 +74,15 @@ class count:
 		#print(x_values)
 		#print(y_values)
 
-		return x_values,y_values
+		return [x_values,y_values]
 	def __tuple_seperator(self,loc):
+		"""
+		loc: tuple of 2 ndarrays() for x,y coordinates
+		"""
 		if len(loc) != 0:
-			x_values = []; y_values = []
+			xy_total = self.__Convert(loc[0], loc[1])
 
-			x0 = loc[0]; y0 = loc[1]
-
-			#print(x0)
-			x_values= np.append(x_values, x0)
-			y_values= np.append(y_values, y0)
-
-			#print("start of combining")
-			#print("all x coordinate:", x_combined)
-
-			xy_total = list(self.__Convert(x_values, y_values))
-
-			output = (np.array(xy_total[0], dtype=np.int64), np.array(xy_total[1], dtype=np.int64))
+			output = np.array(xy_total[0], dtype=np.int64), np.array(xy_total[1], dtype=np.int64)
 			return output
 		else:
 			return loc
@@ -175,14 +167,12 @@ class count:
 	############################
 	#######start of code########
 	############################
-
-
 	def __image_count(self,plans, page_count,project_directory,black_scrub = True):
 		"""
 		plans,page_count,projDir
 		"""
 		#COLLECT IMAGES AS LIST
-		symbol_picture_directory = project_directory + r"\\" + r"symbol_images"
+		symbol_picture_directory = os.path.join(project_directory,r"symbol_images")
 		folder = os.listdir(symbol_picture_directory)
 		#print("folder =", folder)
 
@@ -190,7 +180,7 @@ class count:
 
 		###Folder Settings for Saved Highlights### --- Allocation for Multiple Highlighted Pages
 		h_count = page_count
-		highlightsPath = project_directory + r"\\" + r"highlights_final"
+		highlightsPath = os.path.join(project_directory,r"highlights_final")
 		highlights = 'highlights' + "_" + str(h_count) + ".jpg"
 		fileHighlights = os.path.join(highlightsPath ,highlights)
 
@@ -212,7 +202,7 @@ class count:
 				for picture in os.listdir(symbol_file):
 
 					#START OF TEMPLATE MATCHING CODE#
-					pic = symbol_file + "\\" + picture
+					pic = os.path.join(symbol_file,picture)
 
 					template = cv2.imread(pic)
 					template = cv2.cvtColor(template,cv2.COLOR_BGR2GRAY)

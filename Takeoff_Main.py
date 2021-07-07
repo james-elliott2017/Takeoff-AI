@@ -7,7 +7,7 @@
 from AutoCount.AutocountMain import count
 from OCRLibrary.TextExtractorMain import text_counter
 
-project = r"5638_NAVFAC"
+project = r"5637_Madesto_Courthouse"
 division = r"Data_Floor" #text_extractor ONLY
 
 ###LOAD PROJECT###
@@ -15,11 +15,12 @@ AutoCount_Class = count()
 working_dir = AutoCount_Class.create_project(project) #works as a loader also
 
 ###AutoCount###
-# AutoCount_Class.run_counts(working_dir,is_dir=True)
+AutoCount_Class.threshold = 0.80
+AutoCount_Class.run_counts(working_dir,is_dir=True)
 
 ###TEXT EXTRACTOR###
-text_class = text_counter()
-text_class.textExtracMain(project, division)
+# text_class = text_counter()
+# text_class.textExtracMain(project, division)
 
 ###OCR-Extractor###
 # coming soon
