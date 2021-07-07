@@ -6,6 +6,7 @@
 
 from OCRLibrary.TextExtractorMain import textExtracMain
 from AutoCount.AutocountMain import count
+from OCRLibrary.TextExtractorMain_Beta import text_counter
 
 
 #FINAL VERSION --- one script for autocount & text_count --> allows shared project name
@@ -22,7 +23,9 @@ working_dir = AutoCount_Class.create_project(project)
 #AutoCount_Class.run_counts(working_dir,is_dir=True)
 
 ###TEXT EXTRACTOR###
-textExtracMain(project, division)
+#textExtracMain(project, division)
+text_class = text_counter()
+text_class.textExtracMain(project, division)
 
 ###OCR###
 #not existing yet
@@ -30,5 +33,5 @@ textExtracMain(project, division)
 ###TO DO LIST###
 #2 Add image_search_dimensions for cropping out edges (AutoMainCount)
 #3 Add text window to ignore edges (TextExtractormain)
-#4 add in ' # ', so you can find only numbers that are by themselves (TextExtractormain)
+#4 Class(ify) textExtracMain()
 #5 Change CSV formatting to use highlight name instead
