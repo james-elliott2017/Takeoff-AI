@@ -7,12 +7,8 @@
 from AutoCount.AutocountMain import count
 from OCRLibrary.TextExtractorMain import text_counter
 
-
-#FINAL VERSION --- one script for autocount & text_count --> allows shared project name
 project = r"5638_NAVFAC"
-
-#current version only works with text_counting
-division = r"Data_Floor"
+division = r"Data_Floor" #text_extractor ONLY
 
 ###LOAD PROJECT###
 AutoCount_Class = count()

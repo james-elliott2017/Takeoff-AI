@@ -10,9 +10,11 @@ import re
 
 class text_counter():
 	def __init__(self):
-		###HARD PATHS###
-		self.primary_directory = r"C:\Users\james\OneDrive\Documents\Coding Projects\Python Projects\Takeoff AI\Walker Projects"
-		#^ROOT PROJECT DIRECTORY^#
+		self.takeoffAI_root_dir = r"C:\Users\james\OneDrive\Documents\Coding Projects\Python Projects\Takeoff AI"
+		#^ROOT PROJECT DIRECTORY---CHANGE THIS!!!^#
+
+		###LOCAL HARD PATHS###
+		self.project_dir = os.path.join(self.takeoffAI_root_dir,"Walker Projects")
 		self.MainExtractionFolder = r"TextExtractor_files"
 		self.text_folder = r"text_folder"
 		self.csv_folder = r"csv_folder"
@@ -181,7 +183,7 @@ class text_counter():
 			and than creates division or visits that division and runs counts based on inputed text_files
 		"""
 		#WORKING Directory for textExtraction files
-		self.txtMainDir = os.path.join(self.primary_directory, Project ,self.MainExtractionFolder)
+		self.txtMainDir = os.path.join(self.project_dir, Project ,self.MainExtractionFolder)
 		try:
 			import sys
 			sys.path.append(self.txtMainDir)
@@ -194,7 +196,7 @@ class text_counter():
 			constant_copy_path = os.path.join(self.txtMainDir,"Constants.py")
 
 			self.constants_template = r"text_constants.py"
-			self.templateDir = r"C:\Users\james\OneDrive\Documents\Coding Projects\Python Projects\Takeoff AI\OCRLibrary"
+			self.templateDir = os.path.join(self.takeoffAI_root_dir,r"OCRLibrary")
 			completeConstantPath = os.path.join(self.templateDir,self.constants_template)
 			shutil.copyfile(completeConstantPath, constant_copy_path)
 			#time.sleep(1)
@@ -206,13 +208,9 @@ class text_counter():
 
 
 		#.txt files location
-		self.text_folder = self.txtMainDir + r"\\" + division\
-		 + r"\\" + self.text_folder
-
+		self.text_folder = os.path.join(self.txtMainDir,division,self.text_folder)
 		 #.csv files location
-		csv_save_folder = self.txtMainDir + r"\\" + division\
-		 + r"\\" + self.csv_folder
-
+		self.csv_save_folder = os.path.join(self.txtMainDir,division,self.csv_folder)
 		try:
 			#edit if using different names in class:words
 			#############################################
@@ -221,12 +219,12 @@ class text_counter():
 			keyWords = Constants.words.data
 				#tmp_ratio = {"0_":3,"8_":3,"10_":2,"11_":4}
 	################################################################################################################
-			self.MainTextExtractor(csv_save_folder,keyWords)
+			self.MainTextExtractor(self.csv_save_folder,keyWords)
 		except:
 			print("FOLDER DOES NOT EXIST, creating new one")
 			
 			self.divisionCreator(self.txtMainDir, division)
-			#FINAL VERSION --- put self.divisionCreator() in same .py as project creator for orginization
+			#FINAL VERSION --- put self.divisionCreator() in same .py as project creator for organization
 			print("path created\nPlease Rerun Script")
 
 
