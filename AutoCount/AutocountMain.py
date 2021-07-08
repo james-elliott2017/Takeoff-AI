@@ -251,7 +251,6 @@ class count:
 						###can be done in that order
 						#########################################################################################
 
-
 						squareColor = self.template_color[list_number]
 						x = self.__visual_updater(resized_color, loc_local_symbol, squareColor, w, h)
 						total = x
