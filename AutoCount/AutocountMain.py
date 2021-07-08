@@ -15,7 +15,7 @@ import imutils
 #test imports only
 ## import icecream as ic
 
-class count:
+class img_count:
 	def __init__(self):
 		self.template_color = [(0,0,255),(0,255,0),(255,0,0),(255, 157, 214),(0,255,255),
 			(255,0,255),(79, 0, 0),(79, 77, 0),(79, 194, 194),(193, 128, 194),\

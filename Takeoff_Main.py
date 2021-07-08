@@ -4,19 +4,19 @@
 #Primary Script to all projects
 #FINAL VERSION --- put all calls here so that javascript can communicate with this file
 
-from AutoCount.AutocountMain import count
+from AutoCount.AutocountMain import img_count
 from TextCount.TextExtractorMain import text_counter
 
 project = r"5638_NAVFAC"
 division = r"Data_Floor" #text_extractor ONLY
 
 ###LOAD PROJECT###
-AutoCount_Class = count()
+AutoCount_Class = img_count()
 working_dir = AutoCount_Class.create_project(project) #works as a loader also
 
 ###AutoCount###
-# AutoCount_Class.threshold = 0.80
-# AutoCount_Class.run_counts(working_dir,is_dir=True)
+AutoCount_Class.threshold = 0.80
+AutoCount_Class.run_counts(working_dir,is_dir=True)
 
 ###TEXT EXTRACTOR###
 text_class = text_counter()
