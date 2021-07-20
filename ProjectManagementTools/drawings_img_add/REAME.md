@@ -1,0 +1,1 @@
+drawings_img_add can take a logo image and place it at the same location based on coordinate specification & also hide parts via a white canvas image of specified size.
