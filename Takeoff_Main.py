@@ -7,7 +7,7 @@
 from AutoCount.AutocountMain import img_count
 from TextCount.TextExtractorMain import text_counter
 
-project = r"5638_NAVFAC"
+project = r"6083 Claire_Lilienthal_School"
 division = r"Data_Floor" #text_extractor ONLY
 
 ###LOAD PROJECT###
