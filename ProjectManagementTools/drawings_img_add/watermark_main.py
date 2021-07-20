@@ -2,86 +2,94 @@
 from PIL import Image
 import fitz
 import os
-from numpy import zeros
-import numpy as np
 
-src_pdf_filename = "Telecomm_Walker.pdf"
+class watermark():
+	def __init__(self):
+		self.input_pdf = r"example_files/test_page.pdf"
+		self.output_pdf = r'output_folder/output_pdf.pdf'
+		vert_img, horz_img = (r"logos/walker_full_rotated.png",r"logos/walker_full_logo.png")
+		self.img_logo = vert_img
+		self.config_img = r"output_folder/config_img.png"
 
+		self._instance_info(config_img=True)
 
-dst_pdf_filename = 'output_pdf.pdf'
-img_logo = "walker_full_logo.png"
-img_white = "white_space.png"
+	def get_img_dims(self,img_path):
+		tmp = Image.open(img_path)
+		w,h = tmp.size
+		return (w,h)
 
-print("Imports Complete")
+	def print_pdf_page_dims(self,pdf_source,save_png = False):
+		document = fitz.open(pdf_source)
+		pix_map = document.getPagePixmap(0)
+		dims = pix_map.irect
 
-def get_img_dims(img_path):
-	tmp = Image.open(img_path)
-	w,h = tmp.size
-	return (w,h)
+		if save_png == True:
+			pix_map.save(self.config_img)
 
-def create_white_canvas(x,y):
-	imga = zeros([y,x,3])
-	h = len(imga)
-	w = len(imga[0])
+		return dims
 
-	for y in range(h):
-	    for x in range(w):
-	        imga[y,x] = [255,255,255] #COLOR OF BOX
+	def add_img(self,logo_box,wb=None):
+		"""
+		logo_box: fitz.Rect() object
+		wb: fitz.Rect() object
+		"""
+		document = fitz.open(self.input_pdf)
+		new_doc = fitz.open() #new_file to work with
 
-	img = Image.fromarray(imga.astype(np.uint8))
-	img.save("white_space.png")
-
-def add_img(x,y,w,h,img_filename,whiteout=False,wr=[]):
-	"""
-	wr: 'white_rect = [top_left_x,top_left_y,bot_right_x,bot_right_y'
-	"""
-	document = fitz.open(src_pdf_filename)
-	new_doc = fitz.open() #new_file to work with
-
-	# We'll put image on first page only but you could put it elsewhere
-	logo_px = fitz.Pixmap(img_logo)
-	for i in range(document.page_count):
-		page = document[i]
-		
-		if whiteout == True:
-			white_rect = fitz.Rect(wr[0], wr[1],wr[2],wr[3])
-
+		# We'll put image on first page only but you could put it elsewhere
+		logo_px = fitz.Pixmap(self.img_logo)
+		for i in range(document.page_count):
 			px_page = document.getPagePixmap(i)
-			px_page.clear_with(255,white_rect)
-			print("page size: {}".format(px_page.irect))
+
+			#insert white box
+			if wb != None:
+				px_page.clear_with(255,wb)
+
 			new_doc.insert_page(-1,width=px_page.width,height=px_page.height)
 			new_doc[i].insert_image(px_page.irect,pixmap=px_page)
-			#1) clear with handles background, so colored square needs to be removed
-			#2) organize so we clear and append logo
-			#3) Remove create square call as well
-			#4) Edit input dimension to fit new scan
-		# Set position and size according to your needs
-		img_rect = fitz.Rect(x, y, w, h)
-		# print(new_doc[i].rect)
-		new_doc[i].insert_image(img_rect, pixmap=logo_px,keep_proportion=False)
 
-		new_doc.save("walker_roster.pdf",garbage=4,deflate=True)
-	document.close()
-	new_doc.close()
+			#insert logo
+			new_doc[i].insert_image(logo_box, pixmap=logo_px,keep_proportion=False)
+			new_doc.save(self.output_pdf,garbage=4,deflate=True)
+
+		document.close()
+		new_doc.close()
+
+	def _instance_info(self,config_img = False):
+		"""
+		print helper function
+		"""
+		w,h = self.get_img_dims(self.img_logo)
+		pdf_dims = self.print_pdf_page_dims(self.input_pdf,save_png=config_img)
+		print("Instance has")
+		print("Logo Size w: {},h: {}".format(w,h))
+		print("PDF ~DIM: {}\n".format(pdf_dims))
+
+
+	def _horizontal_bot_center_dim(self):
+		"""
+		uses pixmap() references to decide where to put an image
+		"""
+		pass
+	def _vertical_right_center_dim(self):
+		"""
+		uses pixmap() reference to decide where to put vertical image
+		"""
+		pass
 
 if __name__ == '__main__':
-	#grab dimensions & ratio
-	w,h = get_img_dims(img_logo)
-	print("img; w: {},h: {}".format(w,h))
-
-	#whiteout area on left
-	white_size = (2150,175)
+	watermark_class = watermark()
 	
-	wht_x,wht_y = (620,2380) #top_left corner
-	white_area = (wht_x,wht_y,wht_x+white_size[0],wht_y+white_size[1])
-	create_white_canvas(white_size[0], white_size[1])
+	#USE MS PAINT FOR PIXEL LOCATIONS
+	x,y = (2705,329) ##LOGO POSITION (top left corner)
+	w,h = watermark_class.get_img_dims(watermark_class.img_logo)
+	w,h = (219,1045)
+	#whiteout area on left
+	wht_x,wht_y = (2665,293) #top_left corner
+	white_size = (317,1147)
 
-	#LOGO POSITION
-	# pdf tradition page size (595,842)--> (cols,rows)
-	x,y = (1200,2350) #top_left image add location
-	add_img(x,y,x+w,y+h,img_logo,whiteout=True,wr=white_area)
+	white_box = fitz.Rect(wht_x,wht_y,wht_x+white_size[0],wht_y+white_size[1])
+	logo_box = fitz.Rect(x,y,x+w,y+h)
+	
+	watermark_class.add_img(logo_box,wb=white_box)
 	print("Walker Insert Complete")
-
-### ISSUES ###
-#1) white_canvas DOES not work in current state
-#2) weird issue where images don't show on some documents
