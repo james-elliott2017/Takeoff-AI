@@ -1,0 +1,66 @@
+{
+  "accountId" : 14191,
+  "alpha_8" : "Amazon warehouse stockton ",
+  "formMetaData" : {
+    "tasks" : [
+
+    ],
+    "startFormTimeStamp" : "2021-07-30T13:15:21.148-07:00",
+    "endFormTimeStamp" : "2021-07-30T13:28:47.344-07:00",
+    "deviceMetaData" : {
+      "freeDiskMb" : 10320,
+      "device" : "iPad",
+      "sdkRelease" : "14.6",
+      "appVersion" : "5.3.1-S (1092)",
+      "appType" : "iOS",
+      "totalMemoryMb" : 2077179904
+    },
+    "listpicker_25" : {
+      "selectedNames" : [
+
+      ],
+      "selectedScores" : [
+
+      ],
+      "selectedValues" : [
+
+      ]
+    },
+    "listpicker_23" : {
+      "selectedNames" : [
+        "Andrew Lucero"
+      ],
+      "selectedScores" : [
+        "0.000000"
+      ],
+      "selectedValues" : [
+        "Andrew Lucero"
+      ]
+    }
+  },
+  "displayReferenceValue" : "",
+  "multiline_44" : "We finished up the last couple exterior doors for the building. Only need to do the door contacts once we get them from securitas.\nDropped the locker room door contacts and horn. \nButtoned up pump room door contacts.\nInstalled the 1320 board at ACP06 and terminated the door to it. \nInstalled devices at ACD 123.",
+  "formVersion" : 48,
+  "listpicker_25" : [
+
+  ],
+  "inline_photo_59" : "14191_5e7279a2-fe9b-4cfb-ad56-56cba00dca48_7e91fcab-7594-45d7-bb49-68c58f5f05d4.jpg",
+  "submissionId" : "5e7279a2-fe9b-4cfb-ad56-56cba00dca48",
+  "numeric_37" : 16,
+  "switchpicker_39" : false,
+  "numeric_9" : 6087,
+  "updatedAt" : "2021-07-30T13:28:47.340-07:00",
+  "formName" : "Construction Daily",
+  "listpicker_23" : [
+    "Andrew Lucero"
+  ],
+  "datepicker_41" : "2021-07-30T13:23:58.285-07:00",
+  "formId" : 24944,
+  "signature_40" : "14191_5e7279a2-fe9b-4cfb-ad56-56cba00dca48_860e5344-716a-43a8-a4d5-4f79c4c7e43c.jpg",
+  "dispatchId" : 0,
+  "userName" : "andrew@walkertelecomm.com",
+  "multiline_48" : "We were able to finish up the doors we needed to finish up the perimeter on straight time. No need for overtime.\n\nWe’re going need more horns for the doors that are interior. (P\/N: 0E-SRNSTROBT) need 11.\n\nGot T&M tags signed. Sent to securitas. \n\nWaiting for door contacts.\n\nNo data at panel.\n\n",
+  "multiline_47" : "Andrew\nMiguel ",
+  "datepicker_24" : "2021-07-30T13:15:29.672-07:00",
+  "userId" : 182614
+}

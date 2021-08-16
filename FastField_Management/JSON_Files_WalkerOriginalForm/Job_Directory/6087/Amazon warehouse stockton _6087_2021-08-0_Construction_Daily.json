@@ -1,0 +1,65 @@
+{
+  "accountId" : 14191,
+  "alpha_8" : "Amazon warehouse stockton ",
+  "formMetaData" : {
+    "tasks" : [
+
+    ],
+    "startFormTimeStamp" : "2021-08-02T14:11:21.093-07:00",
+    "endFormTimeStamp" : "2021-08-02T14:15:28.859-07:00",
+    "deviceMetaData" : {
+      "freeDiskMb" : 10565,
+      "device" : "iPad",
+      "sdkRelease" : "14.6",
+      "appVersion" : "5.3.1-S (1092)",
+      "appType" : "iOS",
+      "totalMemoryMb" : 2077179904
+    },
+    "listpicker_25" : {
+      "selectedNames" : [
+
+      ],
+      "selectedScores" : [
+
+      ],
+      "selectedValues" : [
+
+      ]
+    },
+    "listpicker_23" : {
+      "selectedNames" : [
+        "Andrew Lucero"
+      ],
+      "selectedScores" : [
+        "0.000000"
+      ],
+      "selectedValues" : [
+        "Andrew Lucero"
+      ]
+    }
+  },
+  "displayReferenceValue" : "",
+  "multiline_44" : "Pulled OSP tie cable to ACP.10\nTerminated all the FA wire to the fire alarm relay.\nInstalled the door contacts I got from Clyde this morning.",
+  "formVersion" : 48,
+  "listpicker_25" : [
+
+  ],
+  "inline_photo_59" : "14191_e91d4924-0150-475a-942f-ab1d2e2f45db_d5b5c33d-e562-4693-996f-5f1471b48389.jpg",
+  "submissionId" : "e91d4924-0150-475a-942f-ab1d2e2f45db",
+  "switchpicker_39" : false,
+  "numeric_9" : 6087,
+  "updatedAt" : "2021-08-02T14:15:28.852-07:00",
+  "formName" : "Construction Daily",
+  "listpicker_23" : [
+    "Andrew Lucero"
+  ],
+  "datepicker_41" : "2021-08-02T14:14:29.962-07:00",
+  "formId" : 24944,
+  "signature_40" : "14191_e91d4924-0150-475a-942f-ab1d2e2f45db_48fe4e2d-4c5a-4a52-986c-d7a338e79bf2.jpg",
+  "dispatchId" : 0,
+  "userName" : "andrew@walkertelecomm.com",
+  "multiline_48" : "Still need pathway to the panels at the guard shack. \n",
+  "multiline_47" : "Andrew \nMiguel ",
+  "datepicker_24" : "2021-08-02T14:11:35.359-07:00",
+  "userId" : 182614
+}

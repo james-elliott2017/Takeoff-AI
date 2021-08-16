@@ -1,0 +1,65 @@
+{
+  "accountId" : 14191,
+  "alpha_8" : "Amazon warehouse stockton ",
+  "formMetaData" : {
+    "tasks" : [
+
+    ],
+    "startFormTimeStamp" : "2021-07-20T13:51:53.350-07:00",
+    "endFormTimeStamp" : "2021-07-20T13:57:33.016-07:00",
+    "deviceMetaData" : {
+      "freeDiskMb" : 10503,
+      "device" : "iPad",
+      "sdkRelease" : "14.6",
+      "appVersion" : "5.3.1-S (1092)",
+      "appType" : "iOS",
+      "totalMemoryMb" : 2077179904
+    },
+    "listpicker_25" : {
+      "selectedNames" : [
+
+      ],
+      "selectedScores" : [
+
+      ],
+      "selectedValues" : [
+
+      ]
+    },
+    "listpicker_23" : {
+      "selectedNames" : [
+        "Andrew Lucero"
+      ],
+      "selectedScores" : [
+        "0.000000"
+      ],
+      "selectedValues" : [
+        "Andrew Lucero"
+      ]
+    }
+  },
+  "displayReferenceValue" : "",
+  "multiline_44" : "Finished terminating ACP.05 and ACP.08.\nThe only thing left at ACP.08 are the AO wire and the turnstile FA wire. We still don’t have answers on how we terminate that.\nWe had some mis labeled cables at ACP.02 that we had to tone out. Got those sorted out. Should have them landed tomorrow.",
+  "formVersion" : 48,
+  "listpicker_25" : [
+
+  ],
+  "inline_photo_59" : "14191_ff0d9640-daa2-45ee-b0a5-2410af08d8eb_768a785d-34c0-46d0-ac00-242a575f5ce8.jpg",
+  "submissionId" : "ff0d9640-daa2-45ee-b0a5-2410af08d8eb",
+  "switchpicker_39" : false,
+  "numeric_9" : 6087,
+  "updatedAt" : "2021-07-20T13:57:33.010-07:00",
+  "formName" : "Construction Daily",
+  "listpicker_23" : [
+    "Andrew Lucero"
+  ],
+  "datepicker_41" : "2021-07-20T13:56:55.074-07:00",
+  "formId" : 24944,
+  "signature_40" : "14191_ff0d9640-daa2-45ee-b0a5-2410af08d8eb_b78b9f41-5e35-4520-8812-ac118bf8f7e3.jpg",
+  "dispatchId" : 0,
+  "userName" : "andrew@walkertelecomm.com",
+  "multiline_48" : "Spoke to Mark from KPRS about us doing the work at doors we are waiting for all on T&M. Told him I needed to run it by Steve and Daniel to verify that is what we agree to. ",
+  "multiline_47" : "Andrew\nMiguel ",
+  "datepicker_24" : "2021-07-20T13:52:04.494-07:00",
+  "userId" : 182614
+}

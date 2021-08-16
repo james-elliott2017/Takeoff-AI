@@ -1,0 +1,62 @@
+{
+  "accountId" : 14191,
+  "alpha_8" : "Building 700",
+  "formMetaData" : {
+    "startFormTimeStamp" : "2021-07-13T17:41:06.818-07:00",
+    "endFormTimeStamp" : "2021-07-13T17:45:44.905-07:00",
+    "deviceMetaData" : {
+      "freeDiskMb" : 3299,
+      "device" : "iPad",
+      "sdkRelease" : "14.0.1",
+      "appVersion" : "5.2.1-S (1009)",
+      "appType" : "iOS",
+      "totalMemoryMb" : 2077376512
+    },
+    "listpicker_25" : {
+      "selectedNames" : [
+        "Warm"
+      ],
+      "selectedScores" : [
+        "0.000000"
+      ],
+      "selectedValues" : [
+        "Warm"
+      ]
+    },
+    "listpicker_23" : {
+      "selectedNames" : [
+        "Kyle Campos"
+      ],
+      "selectedScores" : [
+        "0.000000"
+      ],
+      "selectedValues" : [
+        "Kyle Campos"
+      ]
+    }
+  },
+  "displayReferenceValue" : "",
+  "multiline_44" : "2-people on site \n\nInstalled 9 48 port patch panels \nDressed in 8 bundles of cat6 on ladder rack \nLaced in 60 cables into patch panels \nInstalled old 4” vertical wire manager ",
+  "formVersion" : 48,
+  "listpicker_25" : [
+    "Warm"
+  ],
+  "inline_photo_59" : "14191_c26d0867-17aa-4af7-83a2-c800ffaff94c_91b2a6ca-55cf-4717-8f53-3d81b23e6e57.jpg",
+  "submissionId" : "c26d0867-17aa-4af7-83a2-c800ffaff94c",
+  "numeric_37" : 16,
+  "switchpicker_39" : false,
+  "numeric_9" : 3609,
+  "updatedAt" : "2021-07-13T17:45:44.900-07:00",
+  "formName" : "Construction Daily",
+  "listpicker_23" : [
+    "Kyle Campos"
+  ],
+  "datepicker_41" : "2021-07-13T17:45:33.170-07:00",
+  "formId" : 24944,
+  "signature_40" : "14191_c26d0867-17aa-4af7-83a2-c800ffaff94c_bdf9d617-9e66-4db0-ad18-bec9dfea5f29.jpg",
+  "dispatchId" : 0,
+  "userName" : "kyle@walkertelecomm.com",
+  "multiline_47" : "Kyle Campos \nChris Sattersfield",
+  "datepicker_24" : "2021-07-13T17:41:24.551-07:00",
+  "userId" : 304469
+}

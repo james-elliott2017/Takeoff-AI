@@ -1,0 +1,62 @@
+{
+  "accountId" : 14191,
+  "alpha_8" : "Building 700",
+  "formMetaData" : {
+    "startFormTimeStamp" : "2021-08-02T17:33:09.911-07:00",
+    "endFormTimeStamp" : "2021-08-02T17:42:03.935-07:00",
+    "deviceMetaData" : {
+      "freeDiskMb" : 2207,
+      "device" : "iPad",
+      "sdkRelease" : "14.0.1",
+      "appVersion" : "5.2.1-S (1009)",
+      "appType" : "iOS",
+      "totalMemoryMb" : 2077376512
+    },
+    "listpicker_25" : {
+      "selectedNames" : [
+        "Warm"
+      ],
+      "selectedScores" : [
+        "0.000000"
+      ],
+      "selectedValues" : [
+        "Warm"
+      ]
+    },
+    "listpicker_23" : {
+      "selectedNames" : [
+        "Kyle Campos"
+      ],
+      "selectedScores" : [
+        "0.000000"
+      ],
+      "selectedValues" : [
+        "Kyle Campos"
+      ]
+    }
+  },
+  "displayReferenceValue" : "",
+  "multiline_44" : "2- people on site \n\nTerminated 72 cables in IDF and put on 48 cables labels \n\nTerminated 48 cables faceplate and label 12 locations ",
+  "formVersion" : 48,
+  "listpicker_25" : [
+    "Warm"
+  ],
+  "inline_photo_59" : "14191_50ec2da7-12b7-45aa-9439-f1cbcc4413fe_ea5db206-6d09-41e9-b09f-7d498bc35845.jpg",
+  "submissionId" : "50ec2da7-12b7-45aa-9439-f1cbcc4413fe",
+  "numeric_37" : 16,
+  "switchpicker_39" : false,
+  "numeric_9" : 3609,
+  "updatedAt" : "2021-08-02T17:42:03.934-07:00",
+  "formName" : "Construction Daily",
+  "listpicker_23" : [
+    "Kyle Campos"
+  ],
+  "datepicker_41" : "2021-08-02T17:40:23.460-07:00",
+  "formId" : 24944,
+  "signature_40" : "14191_50ec2da7-12b7-45aa-9439-f1cbcc4413fe_67ab6a96-4daf-45be-8931-e87874b8bcee.jpg",
+  "dispatchId" : 0,
+  "userName" : "kyle@walkertelecomm.com",
+  "multiline_47" : "Joseph Le \nKyle Campos ",
+  "datepicker_24" : "2021-08-02T17:33:28.762-07:00",
+  "userId" : 304469
+}

@@ -1,0 +1,68 @@
+{
+  "accountId" : 14191,
+  "alpha_8" : "CSUS vasche library ",
+  "formMetaData" : {
+    "startFormTimeStamp" : "2020-12-28T12:42:09.114-08:00",
+    "endFormTimeStamp" : "2021-07-17T10:52:19.474-07:00",
+    "deviceMetaData" : {
+      "freeDiskMb" : 14512,
+      "device" : "iPad",
+      "sdkRelease" : "12.5.3",
+      "appVersion" : "5.2.1-S (1009)",
+      "appType" : "iOS",
+      "totalMemoryMb" : 1021313024
+    },
+    "listpicker_25" : {
+      "selectedNames" : [
+        "Clear",
+        "Hot"
+      ],
+      "selectedScores" : [
+        "0.000000",
+        "0.000000"
+      ],
+      "selectedValues" : [
+        "Clear",
+        "Hot"
+      ]
+    },
+    "listpicker_23" : {
+      "selectedNames" : [
+        "Arnold Chapman"
+      ],
+      "selectedScores" : [
+        "0.000000"
+      ],
+      "selectedValues" : [
+        "Arnold Chapman"
+      ]
+    }
+  },
+  "multiline_45" : "1 cart , 1 drill , 1 impact , 1 band saw , 6ft ladder , 6ft podium ladder , 8ft ladder , 10ft ladder , 12ft ladder , 1 bazooka light , 1 floor light , 1 job box , 1 extension cords ,1 pigtail , 1 hilti gun and pole ,1 fish tape , 1 ptouch ,1 push pole , 2 sets of racketeers , 1 set of jack stands , 5ft pole , 7ft pole and misc. items",
+  "displayReferenceValue" : "",
+  "multiline_44" : "*labeled 3\/4 patch panel in 2nd north\n*counted all patch cords\n* finished lacing all the cables in furniture on first north \n*terminated 120 data cables in furniture installed plates and labeled on first North\n*laced 3 set of furniture on second North\n* terminated 15 data cables in furniture on second north\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+  "formVersion" : 47,
+  "listpicker_25" : [
+    "Clear",
+    "Hot"
+  ],
+  "inline_photo_59" : "14191_193b6fe8-a3f1-4252-a776-e6d81ca7e2e2_fe1ec83d-d00d-4b6d-ab6e-b19468a38739.jpg",
+  "submissionId" : "193b6fe8-a3f1-4252-a776-e6d81ca7e2e2",
+  "numeric_37" : 32,
+  "switchpicker_39" : false,
+  "numeric_9" : 4630,
+  "updatedAt" : "2021-07-17T10:52:19.470-07:00",
+  "formName" : "Construction Daily",
+  "listpicker_23" : [
+    "Arnold Chapman"
+  ],
+  "datepicker_41" : "2021-07-16T12:47:46.000-07:00",
+  "formId" : 24944,
+  "alpha_12" : "Hot",
+  "signature_40" : "14191_193b6fe8-a3f1-4252-a776-e6d81ca7e2e2_3f9968e5-20c5-4455-abe1-421ec135315f.jpg",
+  "dispatchId" : 0,
+  "userName" : "arnold@walkertelecomm.com",
+  "multiline_47" : "Arnold chapman\nAustin twitchell\nMark mora\nJason musquiz\n\n\n\n\n\n\n",
+  "datepicker_24" : "2021-07-16T12:43:02.000-07:00",
+  "userId" : 334066
+}

@@ -1,0 +1,64 @@
+{
+  "accountId" : 14191,
+  "alpha_8" : "Amazon warehouse stockton ",
+  "formMetaData" : {
+    "tasks" : [
+
+    ],
+    "startFormTimeStamp" : "2021-07-08T15:54:38.954-07:00",
+    "endFormTimeStamp" : "2021-07-14T10:00:27.517-07:00",
+    "deviceMetaData" : {
+      "freeDiskMb" : 10275,
+      "device" : "iPad",
+      "sdkRelease" : "14.6",
+      "appVersion" : "5.3.1-S (1092)",
+      "appType" : "iOS",
+      "totalMemoryMb" : 2077179904
+    },
+    "listpicker_25" : {
+      "selectedNames" : [
+
+      ],
+      "selectedScores" : [
+
+      ],
+      "selectedValues" : [
+
+      ]
+    },
+    "listpicker_23" : {
+      "selectedNames" : [
+        "Andrew Lucero"
+      ],
+      "selectedScores" : [
+        "0.000000"
+      ],
+      "selectedValues" : [
+        "Andrew Lucero"
+      ]
+    }
+  },
+  "displayReferenceValue" : "",
+  "multiline_44" : "Bryan worked on wiring ACP 2 , Miguel and Ryan worked on guard shack window and door contacts, no pathway. Finished ACP 3, no pathway for doors by locker room area still.",
+  "formVersion" : 48,
+  "listpicker_25" : [
+
+  ],
+  "inline_photo_59" : "14191_c9f7746f-d841-48da-816e-b3c69943a4cc_20d4dc58-e2bc-47be-9e2a-1265d3e2134f.jpg",
+  "submissionId" : "c9f7746f-d841-48da-816e-b3c69943a4cc",
+  "switchpicker_39" : false,
+  "numeric_9" : 6087,
+  "updatedAt" : "2021-07-14T10:00:27.511-07:00",
+  "formName" : "Construction Daily",
+  "listpicker_23" : [
+    "Andrew Lucero"
+  ],
+  "datepicker_41" : "2021-07-12T15:56:37.000-07:00",
+  "formId" : 24944,
+  "signature_40" : "14191_c9f7746f-d841-48da-816e-b3c69943a4cc_f996f0a7-9b71-4584-a999-ebc019970a2a.jpg",
+  "dispatchId" : 0,
+  "userName" : "andrew@walkertelecomm.com",
+  "multiline_47" : "Bryan\nMiguel \nRyan",
+  "datepicker_24" : "2021-07-12T15:54:59.000-07:00",
+  "userId" : 182614
+}

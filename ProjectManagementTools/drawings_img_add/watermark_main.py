@@ -1,17 +1,29 @@
 #watermarking Logos & Hiding logos based on pdf location
-from PIL import Image
+from PIL import Image, ImageTk
 import fitz
 import os
 
 class watermark():
 	def __init__(self):
-		self.input_pdf = r"example_files/test_page.pdf"
-		self.output_pdf = r'output_folder/output_pdf.pdf'
-		vert_img, horz_img = (r"logos/walker_full_rotated.png",r"logos/walker_full_logo.png")
-		self.img_logo = vert_img
-		self.config_img = r"output_folder/config_img.png"
+		self.update_dir()
+		self.img_logo = self.horz_img
 
-		self._instance_info(config_img=True)
+		# self._instance_info(config_img=True)
+
+
+	def update_dir(self,new_working_dir=""):
+		"""appends references for input/output files with new dir"""
+		self.new_working_dir = new_working_dir
+		print(new_working_dir)
+		self.input_pdf = os.path.join(new_working_dir,r"example_files/test_page.pdf")
+		self.output_pdf = os.path.join(new_working_dir,r'output_folder/output_pdf.pdf')
+		self.vert_img = os.path.join(new_working_dir,r"logos/walker_full_rotated.png")
+		self.horz_img = os.path.join(new_working_dir,r"logos/walker_full_logo.png")
+		self.config_img = os.path.join(new_working_dir,r"output_folder/config_img.png")
+
+	def update_img_logo(self):
+		"""Used to change img_logo between vertical and horizontal formats"""
+		pass
 
 	def get_img_dims(self,img_path):
 		tmp = Image.open(img_path)
@@ -64,6 +76,20 @@ class watermark():
 		print("Instance has")
 		print("Logo Size w: {},h: {}".format(w,h))
 		print("PDF ~DIM: {}\n".format(pdf_dims))
+
+	def pixmap_preview(self):
+		"""
+		Preview the Watermark of the first page, returns image file location
+
+		logo_box: fitz.Rect() object
+		wb: fitz.Rect() object
+		"""
+		document = fitz.open(self.input_pdf)
+		preview_pixmap = document.getPagePixmap(0)
+		file_loc = os.path.join(self.new_working_dir,"tmp_img.gif")
+		preview_pixmap.save(file_loc)
+		document.close()
+		return file_loc
 
 
 	def _horizontal_bot_center_dim(self):

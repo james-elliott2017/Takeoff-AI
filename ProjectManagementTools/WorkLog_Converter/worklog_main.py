@@ -106,17 +106,17 @@ def multi_file_search(folder_path,pdf_list,csv_file_name = "multi_worklog.csv"):
 	csv_file.close()
 	print("File Saved @ ",csv_file_name)
 
-# if __name__ == '__main__':
-#load in .pdf files for pathing
-folder_path = r"C:\Users\james\OneDrive\Documents\Coding Projects\Walker Telecomm Automation\ProjectManagementTools\WorkLog_Converter\pdf_folder"
-pdf_list = grab_pdf_files(folder_path,file_type=".pdf")
-print("PDF Files Found: ", pdf_list)
+if __name__ == '__main__':
+	#load in .pdf files for pathing
+	folder_path = r"C:\Users\james\OneDrive\Documents\Coding Projects\Walker Telecomm Automation\ProjectManagementTools\WorkLog_Converter\pdf_folder"
+	pdf_list = grab_pdf_files(folder_path,file_type=".pdf")
+	print("PDF Files Found: ", pdf_list)
 
-final_dict = single_file_search(folder_path, pdf_list[0],
-									save_csv=False)
-multi_file_search(folder_path, pdf_list)
+	final_dict = single_file_search(folder_path, pdf_list[0],
+										save_csv=False)
+	multi_file_search(folder_path, pdf_list)
 
-#print statement
-print()
-for key in final_dict:
-	print("{}: {}".format(key,final_dict[key]))
+	#print statement
+	print()
+	for key in final_dict:
+		print("{}: {}".format(key,final_dict[key]))

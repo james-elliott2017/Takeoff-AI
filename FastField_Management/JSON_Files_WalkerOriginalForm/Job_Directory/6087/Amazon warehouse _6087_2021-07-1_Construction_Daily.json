@@ -1,0 +1,65 @@
+{
+  "accountId" : 14191,
+  "alpha_8" : "Amazon warehouse ",
+  "formMetaData" : {
+    "tasks" : [
+
+    ],
+    "startFormTimeStamp" : "2021-07-14T09:51:22.643-07:00",
+    "endFormTimeStamp" : "2021-07-14T09:56:50.344-07:00",
+    "deviceMetaData" : {
+      "freeDiskMb" : 10276,
+      "device" : "iPad",
+      "sdkRelease" : "14.6",
+      "appVersion" : "5.3.1-S (1092)",
+      "appType" : "iOS",
+      "totalMemoryMb" : 2077179904
+    },
+    "listpicker_25" : {
+      "selectedNames" : [
+
+      ],
+      "selectedScores" : [
+
+      ],
+      "selectedValues" : [
+
+      ]
+    },
+    "listpicker_23" : {
+      "selectedNames" : [
+        "Andrew Lucero"
+      ],
+      "selectedScores" : [
+        "0.000000"
+      ],
+      "selectedValues" : [
+        "Andrew Lucero"
+      ]
+    }
+  },
+  "displayReferenceValue" : "",
+  "multiline_44" : "Finished wiring ACP 5 and moved to ACP 4",
+  "formVersion" : 48,
+  "listpicker_25" : [
+
+  ],
+  "inline_photo_59" : "14191_fe11a0cd-47da-4153-b15c-d3af145073a2_171d7fd6-c0f9-4e4f-b8fa-0a9202c710a4.jpg",
+  "submissionId" : "fe11a0cd-47da-4153-b15c-d3af145073a2",
+  "numeric_37" : 8,
+  "switchpicker_39" : false,
+  "numeric_9" : 6087,
+  "updatedAt" : "2021-07-14T09:56:50.338-07:00",
+  "formName" : "Construction Daily",
+  "listpicker_23" : [
+    "Andrew Lucero"
+  ],
+  "datepicker_41" : "2021-07-14T09:54:52.862-07:00",
+  "formId" : 24944,
+  "signature_40" : "14191_fe11a0cd-47da-4153-b15c-d3af145073a2_76243edd-ef98-492d-8f43-49e6458f9aca.jpg",
+  "dispatchId" : 0,
+  "userName" : "andrew@walkertelecomm.com",
+  "multiline_47" : "Miguel ",
+  "datepicker_24" : "2021-07-14T09:51:41.000-07:00",
+  "userId" : 182614
+}

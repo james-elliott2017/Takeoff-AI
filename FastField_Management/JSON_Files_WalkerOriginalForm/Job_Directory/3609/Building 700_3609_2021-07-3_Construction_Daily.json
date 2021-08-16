@@ -1,0 +1,62 @@
+{
+  "accountId" : 14191,
+  "alpha_8" : "Building 700",
+  "formMetaData" : {
+    "startFormTimeStamp" : "2021-07-30T13:24:49.573-07:00",
+    "endFormTimeStamp" : "2021-07-30T13:26:42.354-07:00",
+    "deviceMetaData" : {
+      "freeDiskMb" : 2406,
+      "device" : "iPad",
+      "sdkRelease" : "14.0.1",
+      "appVersion" : "5.2.1-S (1009)",
+      "appType" : "iOS",
+      "totalMemoryMb" : 2077376512
+    },
+    "listpicker_25" : {
+      "selectedNames" : [
+
+      ],
+      "selectedScores" : [
+
+      ],
+      "selectedValues" : [
+
+      ]
+    },
+    "listpicker_23" : {
+      "selectedNames" : [
+        "Kyle Campos"
+      ],
+      "selectedScores" : [
+        "0.000000"
+      ],
+      "selectedValues" : [
+        "Kyle Campos"
+      ]
+    }
+  },
+  "displayReferenceValue" : "",
+  "multiline_44" : "1-person on site \n\nTerminated 96 jacks in the IDF ",
+  "formVersion" : 48,
+  "listpicker_25" : [
+
+  ],
+  "inline_photo_59" : "14191_122353e5-9af0-425f-9eab-11a5622c6be9_3ec8cebe-f165-4139-9994-3de81947e3b7.jpg",
+  "submissionId" : "122353e5-9af0-425f-9eab-11a5622c6be9",
+  "numeric_37" : 8,
+  "switchpicker_39" : false,
+  "numeric_9" : 3609,
+  "updatedAt" : "2021-07-30T13:26:42.352-07:00",
+  "formName" : "Construction Daily",
+  "listpicker_23" : [
+    "Kyle Campos"
+  ],
+  "datepicker_41" : "2021-07-30T13:26:36.489-07:00",
+  "formId" : 24944,
+  "signature_40" : "14191_122353e5-9af0-425f-9eab-11a5622c6be9_8f224392-564f-4e66-98c3-289eeabb196c.jpg",
+  "dispatchId" : 0,
+  "userName" : "kyle@walkertelecomm.com",
+  "multiline_47" : "Joseph Le ",
+  "datepicker_24" : "2021-07-30T13:25:06.492-07:00",
+  "userId" : 304469
+}
