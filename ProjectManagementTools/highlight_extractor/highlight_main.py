@@ -8,7 +8,6 @@ import string
 import numpy as np
 import copy
 
-from typing import List, Tuple
 import fitz
 
 class highlight_parser():

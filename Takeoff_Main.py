@@ -7,7 +7,7 @@
 from AutoCount.AutocountMain import img_count
 from TextCount.TextExtractorMain import text_counter
 
-project = r"6083 Claire_Lilienthal_School"
+project = r"Lodi Community Center"
 division = r"Data_Floor" #text_extractor ONLY
 
 ###LOAD PROJECT###
@@ -29,3 +29,6 @@ text_class.textExtracMain(project, division)
 #2 Add image_search_dimensions for cropping out edges (AutoMainCount)
 #3 Add text window to ignore edges (TextExtractormain)
 #5 Change CSV formatting to use highlight name instead
+
+
+#DEAL WITH CREATION ERRORS WHEN CREATING NEW JOB

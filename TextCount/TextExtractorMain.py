@@ -2,11 +2,81 @@
 #pdf_extractor
 
 import os
+import sys
 import shutil
 import time
 import numpy as np
 import pandas as pd
 import re
+import json
+from typing import List
+
+class JSON_EditError(Exception):
+	def __init__(self,json_path: str):
+		super().__init__(f"Json file either has empty division, does not exists, or is corrupted. Please update JSON file:\n{json_path}")
+
+class text_variables():
+	def __init__(self,json_path: str):
+		self.json_path = json_path
+		# self.constants initialization
+		self.constants = self.__initialize_JSON()
+
+	def __initialize_JSON(self):
+		"""
+		Opens existing JSON, or creates empty dictionary if nothing found.
+		Intializes self.constants
+		"""
+		try:
+			with open(self.json_path) as f:
+				constants = json.load(f)
+			print("JSON Found, loading found JSON")
+		except:
+			print("JSON Load Failed. Creating Empty JSON & Reloading")
+			# with open(self.json_path,'w') as f:
+			# 	json.dump({},f)
+			constants = {}
+		return constants
+
+	def add_division(self,division: str, search_list: List = []):
+		"""add new division including constants if appicable"""
+		if division in self.constants.keys():
+			print(f"Key '{division}' already exists")
+		else:
+			self.constants[division] = search_list
+		
+	def update_division(self,division: str,search_list: List = []):
+		"""updates already existing division inside JSON"""
+		if division in self.constants.keys():
+			self.constants[division] = search_list
+		else:
+			print(f"Division '{division}' does NOT exist")
+	
+	def __isDivision(self,division: str):
+		"""returns True if division exists"""
+		if division in self.constants.keys():
+			return True
+		return False
+
+	def load_division_words(self,division: str) -> List:
+		"""returns specific constants for TextCount from loaded JSON"""
+		division_words = self.constants[division]
+		return division_words
+
+	def save_json(self):
+		"""Resave the opened JSON"""
+		with open(self.json_path,'w') as f:
+			json.dump(self.constants,f)
+
+	def print_json(self,add_message: str=""):
+		"""Debug Helper: Prints the Classes JSON File"""
+		print(f"{add_message}Dictionary:\n{self.constants}")
+
+	def count_main(self,division: str):
+		if (self.__isDivision(division) == True) and (self.load_division_words(division) != []):
+			return self.load_division_words(division)
+		else:
+			self.save_json()
+			raise JSON_EditError(self.json_path)
 
 class text_counter():
 	def __init__(self):
@@ -20,7 +90,7 @@ class text_counter():
 		self.text_folder = r"text_folder"
 		self.csv_folder = r"csv_folder"
 		#Subfolders per Division
-		self.sub_folders = ["self.text_folder","self.csv_folder"]
+		self.sub_folders = ["text_folder","csv_folder"]
 
 		#.CSV Save Information
 		self.csv_default = "Total_Counts.csv"
@@ -185,6 +255,7 @@ class text_counter():
 		Main program to run for text_extraction. Take the given project (must already be created via AutoCount)
 			and than creates division or visits that division and runs counts based on inputed text_files
 		"""
+		print("DISCLAIMER: Old version will be phased out in new version. Please use V2 for newer code")
 		#WORKING Directory for textExtraction files
 		self.txtMainDir = os.path.join(self.project_dir, Project ,self.MainExtractionFolder)
 		try:
@@ -199,7 +270,7 @@ class text_counter():
 			constant_copy_path = os.path.join(self.txtMainDir,"Constants.py")
 
 			self.constants_template = r"text_constants.py"
-			self.templateDir = os.path.join(self.takeoffAI_root_dir,r"OCRLibrary")
+			self.templateDir = os.path.join(self.takeoffAI_root_dir,r"TextCount")
 			completeConstantPath = os.path.join(self.templateDir,self.constants_template)
 			shutil.copyfile(completeConstantPath, constant_copy_path)
 			#time.sleep(1)
@@ -217,10 +288,10 @@ class text_counter():
 		try:
 			#edit if using different names in class:words
 			#############################################
-			#lowVoltage
+			#Low Voltage
 			#print(Constants.words.LowVoltage)
-			keyWords = Constants.words.data
-				#tmp_ratio = {"0_":3,"8_":3,"10_":2,"11_":4}
+			keyWords = Constants.words.data # Change this to loading a .json
+				#load json, 'constants':[key_words]
 	################################################################################################################
 			self.MainTextExtractor(self.csv_save_folder,keyWords)
 		except:
@@ -230,9 +301,36 @@ class text_counter():
 			#FINAL VERSION --- put self.divisionCreator() in same .py as project creator for organization
 			print("path created\nPlease Rerun Script")
 
+	def textExtracMain_V2_JSON(self,Project,division):
+		"""Same as textExtracMain but uses JSON's to save and load constants data"""
+		#WORKING Directory for textExtraction files
+		self.txtMainDir = os.path.join(self.project_dir, Project ,self.MainExtractionFolder)
+		try:
+			self.divisionCreator(self.txtMainDir, division)
+			print("Division Folder DOES NOT EXIST, created new one")
+		except:
+			pass
+		
+		# walker job folder setup .txt files location
+		self.text_folder = os.path.join(self.txtMainDir,division,self.text_folder)
+		# walker job folder .csv save location
+		self.csv_save_folder = os.path.join(self.txtMainDir,division,self.csv_folder)
+
+		#Load Text_Search_List from JSON
+		json_path = os.path.join(self.txtMainDir,"Constants.json")
+		text_class = text_variables(json_path)
+		keyWords = text_class.count_main(division)
+
+		#run text counter
+		self.MainTextExtractor(self.csv_save_folder,keyWords)
+
+def main():
+	pass
+
 
 if __name__ == "__main__":
 	project = r"6082 Sunnyville Civic Center"
 	division = r"LowVoltage"
 
-	self.textExtracMain(project, division)
+	main_class = text_counter()
+	main_class.textExtracMain_V2_JSON(project, division)
