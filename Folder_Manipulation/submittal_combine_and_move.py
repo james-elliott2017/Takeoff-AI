@@ -80,5 +80,7 @@ def main():
 	spec_dir = r"S:\Shared Folders\Steven\Quotes\5600\5609 - Santa Rosa Criminal Court House\Submittal & Closeout\Submittal\V1 - Pre-Construction Submittals\Spec Section Headers"
 	multi_pdf(spec_dir,save_dir)
 
+	#To use somewhere else, make sure to change "Final" inside multi_pdf() to whatever subfolder your files that need combining are
+
 if __name__ == '__main__':
 	main()

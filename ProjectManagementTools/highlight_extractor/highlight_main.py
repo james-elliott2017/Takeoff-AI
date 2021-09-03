@@ -9,6 +9,7 @@ import numpy as np
 import copy
 
 import fitz
+from typing import List, Tuple
 
 class highlight_parser():
     def __init__(self,input_pdf,output_xlsx):

@@ -25,7 +25,7 @@ class pdf_to_txt():
 		pixmap = self.pdf_obj[0].get_pixmap()
 		pixmap.save(os.path.join(self.dir,"output.png"))
 	
-	def main(self,save_path: str,start=0,stop=None):
+	def main(self,save_path: str,start: int=0,stop: int=None):
 		if stop == None:
 			stop = len(self.pdf_obj)
 		total_text = ""
@@ -49,7 +49,7 @@ def main():
 	converter = pdf_to_txt(input_dir,path_in) # instantiate
 	converter.update_text_rect(rectangle) # update rectange test
 	converter.save_pixmap() # save_pixmap for box dimensions
-	converter.main(path_out) # run extractor
+	converter.main(path_out,start=0,stop=None) # run extractor
 
 if __name__ == '__main__':
 	main()

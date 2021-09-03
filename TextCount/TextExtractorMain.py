@@ -255,7 +255,7 @@ class text_counter():
 		Main program to run for text_extraction. Take the given project (must already be created via AutoCount)
 			and than creates division or visits that division and runs counts based on inputed text_files
 		"""
-		print("DISCLAIMER: Old version will be phased out in new version. Please use V2 for newer code")
+		print("DISCLAIMER: TextExtractorMain will be phased out in new version. Please use textExtracMain_V2_JSON() for newer code")
 		#WORKING Directory for textExtraction files
 		self.txtMainDir = os.path.join(self.project_dir, Project ,self.MainExtractionFolder)
 		try:
