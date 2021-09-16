@@ -16,7 +16,7 @@ import imutils
 ## import icecream as ic
 
 class img_count:
-	def __init__(self):
+	def __init__(self,projects_dir=r"C:\Users\james\OneDrive\Documents\Coding Projects\Python Projects\Takeoff AI\Walker Projects"):
 		self.template_color = [(0,0,255),(0,255,0),(255,0,0),(255, 157, 214),(0,255,255),
 			(255,0,255),(79, 0, 0),(79, 77, 0),(79, 194, 194),(193, 128, 194),\
 			(42, 178, 254),(210,210,0),(210,0,210),(0,210,210)\
@@ -25,7 +25,7 @@ class img_count:
 
 		#Initialization Code for Creating New Projects & Accessing Old Projects -->create_project()
 		self.project_folder_names = ["symbol_images","plans_images","highlights_final","TextExtractor_files","Misc_Files"]
-		self.primary_directory = (r"C:\Users\james\OneDrive\Documents\Coding Projects\Python Projects\Takeoff AI\Walker Projects")
+		self.primary_directory = projects_dir
 
 		#Matching Variables CAN be changed if you wish
 		self.angle_iteration = 90

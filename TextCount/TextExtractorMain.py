@@ -79,9 +79,11 @@ class text_variables():
 			raise JSON_EditError(self.json_path)
 
 class text_counter():
-	def __init__(self):
-		self.name = "text_counter()"
-		self.takeoffAI_root_dir = r"C:\Users\james\OneDrive\Documents\Coding Projects\Python Projects\Takeoff AI"
+	def __init__(self,
+	takeoff_AI_root_dir = r"C:\Users\james\OneDrive\Documents\
+		Coding Projects\Python Projects\Takeoff AI"
+		):
+		self.takeoffAI_root_dir = takeoff_AI_root_dir
 		#^ROOT PROJECT DIRECTORY---CHANGE THIS!!!^#
 
 		###LOCAL HARD PATHS###
@@ -96,6 +98,7 @@ class text_counter():
 		self.csv_default = "Total_Counts.csv"
 		self.header_default = "Total Counts"
 	def __repr__(self):
+		self.name = "text_counter()"
 		return "{} class instance".format(self.name)
 
 	def __csv_write(self,my_dict,header,project_folder,csv_fileName = "project_counts.csv"):
