@@ -124,6 +124,7 @@ def single_json():
 	print(json_cls.json_info)
 
 def raw_json_combiner_main():
+	"""Main Function for combining json's inside the same folder"""
 	json_dir_path = r"S:\Personal Folders\FTP\Dailys"
 	database_dir = r"S:\Personal Folders\Databases"
 	json_list = json_combiner(json_dir_path)
