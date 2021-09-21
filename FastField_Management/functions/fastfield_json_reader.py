@@ -1,6 +1,7 @@
 # JSON reader & Panda Creator + Updater
 
 import json
+import pandas as pd
 import pickle as pck
 import os
 import shutil
@@ -66,14 +67,14 @@ def hard_reset():
 def initialize_handler():
 	"""Run event handler to recreate an entire Dataset"""
 	hard_reset()
-
+##############################END OF EVENT HANDLER#####################################
 class open_JSON():
 	def __init__(self,json_file):
 		self.json_file_location = json_file
 		self.json_info = self.open_json(json_file)
-		self.job_num = self.get_field("JI_job_number")
-		self.daily_date = self.get_field("JI_dailyDate")
-		self.job_name = self.get_field("JI_project_name")
+		# self.job_num = self.get_field("JI_job_number")
+		# self.daily_date = self.get_field("JI_dailyDate")
+		# self.job_name = self.get_field("JI_project_name")
 
 	@staticmethod
 	def open_json(file_path):
@@ -88,58 +89,51 @@ class open_JSON():
 		for idx, field in enumerate(self.json_info):
 			print(f"field {idx}: {field}")
 
-def main():
+class json_combiner(open_JSON):
+	def __init__(self,json_file_dir):
+		"""takes in a list of json file names, and their directory, and returns a list of open jsons in a list"""
+		self.dir = json_file_dir
+		self.files = self.grab_files(self.dir,file_ext=".json")
+		self.complete_paths = [os.path.join(self.dir,f) for f in self.files] #hard path joiner
+		#create list of information from json files in the complete_paths list
+		self.json_records = [single_json.json_info for single_json in [open_JSON(json_obj) for json_obj in self.complete_paths]]
+	
+	def to_dataframe(self,filename="json_data.pkl"):
+		"""returns pandas dataframe and saves it file inside dir"""
+		save_path = os.path.join(self.dir,filename)
+		self.dataframe = pd.DataFrame.from_records(self.json_records)
+		return self.dataframe
+	@staticmethod
+	def grab_files(input_dir,file_ext=".json"):
+		"""grabs all files of a specified type from a directory"""
+		input_files = [f for f in os.listdir(input_dir) if f.endswith(file_ext)]
+		return input_files
+	def __print__(self,var_title,variable_name):
+		print(f"Variable Tital {var_title}\n:{variable_name}")
+
+
+def event_main():
 	input_dir = r"S:\Personal Folders\FTP\Dailys"
 	database_dir = r"S:\Personal Folders\Databases"
 	daily_events_file = r"daily_list.pkl"
 	events_loader(input_dir,os.path.join(database_dir,daily_events_file))
 
+def single_json():
+	input_json_path = r"S:\Personal Folders\FTP\Dailys\6087_Amazon warehouse stockton_Daily_09_07_2021.json"
+	json_cls = open_JSON(input_json_path)
+	print(json_cls.json_info)
+
+def raw_json_combiner_main():
+	json_dir_path = r"S:\Personal Folders\FTP\Dailys"
+	database_dir = r"S:\Personal Folders\Databases"
+	json_list = json_combiner(json_dir_path)
+	
+	data_joined = json_list.to_dataframe()
+	data_joined.to_csv(os.path.join(database_dir,"Raw_Dataset.csv"))
+	data_joined.to_excel(os.path.join(database_dir,"Raw_Dataset.xlsx"))
+	print("Raw Dataset Updated")
 
 if __name__ == '__main__':
-	main()
-
-
-
-## Archives JSON's per Job, after adding to Panda Dataframe (NOT NEEDED BECAUSE OF EVENT HANDLER)
-# class move_JSON(open_JSON):
-# 	def __init__(self,open_JSON,job_dir):
-# 		# open_JSON class instantiation
-# 		self.JSON = open_JSON
-
-# 		# sub-dir extraction
-# 		self.dir = job_dir
-# 		self.existing_jobs = self.get_job_nums(self.dir)
-
-# 	@staticmethod
-# 	def get_job_nums(job_dir):
-# 		job_nums = [f for f in os.listdir(job_dir) if not os.path.isfile(os.path.join(job_dir,f))]
-# 		return job_nums
-# 	@staticmethod
-# 	def __create_folder(self,folder_name):
-# 		os.mkdir(os.path.join(self.dir,folder_name))
-# 	@staticmethod
-# 	def __remove_special_characters(file_name,special_char=":][}{/\)(",new_char="_"):
-# 		"""takes input string, and replaces all special_char with new_char"""
-# 		for char in special_char:
-# 			file_name = file_name.replace(char,new_char)
-# 		return file_name
-	
-# 	def move_file(self):
-# 		new_file = "".join([self.JSON.job_name,"_",str(self.JSON.job_num),"_" ,str(self.JSON.daily_date[0:9]),"_Construction_Daily.json"])
-# 		new_file = self.__remove_special_characters(new_file) #remove illegal characters
-
-# 		job_folder_path = os.path.join(self.dir,str(self.JSON.job_num))
-# 		complete_save_path = os.path.join(job_folder_path,new_file)
-
-# 		if str(self.JSON.job_num) not in self.existing_jobs:
-# 			os.mkdir(job_folder_path)
-# 		os.replace(self.JSON.json_file_location,complete_save_path)
-
-# def organize_json_dir(json_dir,job_dir):
-# 	"""uses open_JSON & move_FILE classes over a directory to organize all files into given job folder"""
-# 	json_files = [f for f in os.listdir(json_dir) if f.endswith(".json")]
-# 	for f in json_files:
-# 		json_loaded = open_JSON(os.path.join(json_dir,f))
-# 		move_class = move_JSON(json_loaded,job_dir)
-# 		move_class.move_file()
-# 	print("All Files Moved")
+	# event_main()
+	# single_json()
+	raw_json_combiner_main()

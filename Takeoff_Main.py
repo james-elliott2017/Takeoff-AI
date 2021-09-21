@@ -7,11 +7,11 @@
 from AutoCount.AutocountMain import img_count
 from TextCount.TextExtractorMain import text_counter
 
-project = r"5605 Chicken Ranch Casino"
+project = r"5606 Richmond Prison"
 division = r"Data_Floor" #text_extractor ONLY
 
-TEXT_FLAG = True
-AUTO_FLAG = False
+TEXT_FLAG = False
+AUTO_FLAG = True
 
 ###LOAD PROJECT###
 AutoCount_Class = img_count()
@@ -19,7 +19,7 @@ working_dir = AutoCount_Class.create_project(project) #works as a loader also
 
 if AUTO_FLAG:
 	###AutoCount###
-	AutoCount_Class.threshold = 0.80
+	AutoCount_Class.threshold = 0.85
 	AutoCount_Class.run_counts(working_dir,is_dir=True)
 
 ###TEXT EXTRACTOR###

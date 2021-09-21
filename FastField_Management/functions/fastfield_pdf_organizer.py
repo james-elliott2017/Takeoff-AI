@@ -48,15 +48,20 @@ class move_FILE():
 def organize_files(input_dir,job_dir,file_ext=".pdf"):
 	"""uses open_JSON & move_FILE classes over a directory to organize all files into given job folder"""
 	input_files = [f for f in os.listdir(input_dir) if f.endswith(file_ext)]
+	if input_files == []:
+		print("No New Files Found")
+		return None
+
 	for f in input_files:
 		move_class = move_FILE(input_dir,f,job_dir)
 		move_class.move_file()
-	print("All Files Moved")
+	return True
 
 def main():
 	input_dir = r"S:\Personal Folders\FTP\Dailys"
 	daily_pdfs_dir = r"S:\Personal Folders\Job Dailys"
-	organize_files(input_dir,daily_pdfs_dir)
+	NEW_FILE_FLAG = organize_files(input_dir,daily_pdfs_dir)
+	return NEW_FILE_FLAG #used with high level main
 
 if __name__ == '__main__':
 	main()
