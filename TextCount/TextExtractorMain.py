@@ -308,11 +308,10 @@ class text_counter():
 		"""Same as textExtracMain but uses JSON's to save and load constants data"""
 		#WORKING Directory for textExtraction files
 		self.txtMainDir = os.path.join(self.project_dir, Project ,self.MainExtractionFolder)
+		#Check if Project Folder Exists
 		try:
 			self.divisionCreator(self.txtMainDir, division)
 			print("Division Folder DOES NOT EXIST, created new one")
-		except:
-			pass
 		
 		# walker job folder setup .txt files location
 		self.text_folder = os.path.join(self.txtMainDir,division,self.text_folder)

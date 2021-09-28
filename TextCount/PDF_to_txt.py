@@ -24,6 +24,9 @@ class pdf_to_txt():
 	def save_pixmap(self):
 		pixmap = self.pdf_obj[0].get_pixmap()
 		pixmap.save(os.path.join(self.dir,"output.png"))
+	def open_pixmap(self):
+		"""opens pixmap output.png inside paint if windows pc."""
+		pass
 	
 	def main(self,save_path: str,start: int=0,stop: int=None):
 		if stop == None:
@@ -34,6 +37,9 @@ class pdf_to_txt():
 
 		with open(save_path,'w') as f:
 			f.write(total_text)
+	def img_helper(self):
+		"""Takes first page of image, and saves in working directory"""
+		pass
 
 def main():
 	"""
@@ -46,10 +52,13 @@ def main():
 	path_in = os.path.join(input_dir,input_pdf)
 	path_out = os.path.join(input_dir,output_txt)
 
+	###Initialize Text & Save the First Page in as an image for width Extraction
 	converter = pdf_to_txt(input_dir,path_in) # instantiate
 	converter.update_text_rect(rectangle) # update rectange test
 	converter.save_pixmap() # save_pixmap for box dimensions
-	converter.main(path_out,start=0,stop=None) # run extractor
+
+	###Loop Through Pages & Save to One Text File###
+	converter.main(path_out,start=0,stop=None) # run extractor, can designate which pages also
 
 if __name__ == '__main__':
 	main()
