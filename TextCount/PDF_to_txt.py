@@ -24,9 +24,15 @@ class pdf_to_txt():
 	def save_pixmap(self):
 		pixmap = self.pdf_obj[0].get_pixmap()
 		pixmap.save(os.path.join(self.dir,"output.png"))
-	def open_pixmap(self):
+	def view_pixmap(self,windows_pc = True):
 		"""opens pixmap output.png inside paint if windows pc."""
-		pass
+		img_path = os.path.join(self.dir,"output.png") #same as save_pixmap()
+		if windows_pc:
+			print(img_path)
+			os.system(f'mspaint "{img_path}"')
+		else:
+			print("Apple OS will be added in future build.")
+		
 	
 	def main(self,save_path: str,start: int=0,stop: int=None):
 		if stop == None:
@@ -56,6 +62,7 @@ def main():
 	converter = pdf_to_txt(input_dir,path_in) # instantiate
 	converter.update_text_rect(rectangle) # update rectange test
 	converter.save_pixmap() # save_pixmap for box dimensions
+	converter.view_pixmap(windows_pc = True)
 
 	###Loop Through Pages & Save to One Text File###
 	converter.main(path_out,start=0,stop=None) # run extractor, can designate which pages also
