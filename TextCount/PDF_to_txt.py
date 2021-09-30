@@ -23,13 +23,13 @@ class pdf_to_txt():
 		return page_text
 	def save_pixmap(self,page_num=0):
 		pixmap = self.pdf_obj[page_num]
-		pixmap = pixmap.get_pixmap()
-		pixmap.save(os.path.join(self.dir,"output.png"))
+		pixmap = pixmap.getPixmap()
+		pixmap.writeImage(os.path.join(self.dir,"output.png"))
 	def view_pixmap(self,windows_pc = True):
 		"""opens pixmap output.png inside paint if windows pc."""
 		img_path = os.path.join(self.dir,"output.png") #same as save_pixmap()
 		if windows_pc:
-			print(img_path)
+			# print(f"Image Path for Paint Image:\n{img_path}\n")
 			os.system(f'mspaint "{img_path}"')
 		else:
 			print("Apple OS will be added in future build.")
@@ -65,25 +65,25 @@ def test_main():
 	###Loop Through Pages & Save to One Text File###
 	converter.main(path_out,start=0,stop=None) # run extractor, can designate which pages also
 def main(rectangle = None,save_dir = r"C:\Users\james\OneDrive\Documents\Coding Projects\Python Projects\Takeoff AI\ProjectManagementTools\highlight_extractor\pdf_input",
-	input_pdf = r"test_highlight.pdf",output_txt = r"output.txt"):
+	input_pdf = r"test_highlight.pdf",output_txt = r"output.txt",page_start=0,page_stop=None):
 	if rectangle == None:
 		print("Please find rectange dimensions, and than rerun IF you did not mean to convert the entire page")
 
 	path_in = os.path.join(save_dir,input_pdf)
 	path_out = os.path.join(save_dir,output_txt)
 
-	###Initialize Text & Save the First Page in as an image for width Extraction
-	converter = pdf_to_txt(save_dir,path_in) # instantiate
-	converter.save_pixmap() # save_pixmap for box dimensions
-	converter.view_pixmap(windows_pc = True) #WAITS FOR PAINT TO CLOSE, BEFORE CONTINUING
-def find_pixels(save_dir,input_pdf = r"test_highlight.pdf",output_txt = r"output.txt"):
+	converter = pdf_to_txt(save_dir,path_in,bounding_box=rectangle) # instantiate
+	converter.main(path_out,start=page_start,stop=page_stop) # run extractor, can designate which pages also
+
+def find_pixels(save_dir,input_pdf = r"test_highlight.pdf",pixel_page_num = 0):
 	path_in = os.path.join(save_dir,input_pdf)
-	path_out = os.path.join(save_dir,output_txt)
 
 	converter = pdf_to_txt(save_dir,path_in)
-	converter.save_pixmap() # save_pixmap for box dimensions
+	converter.save_pixmap(page_num=pixel_page_num) # save_pixmap for box dimensions
 	converter.view_pixmap(windows_pc = True)
 
 if __name__ == '__main__':
+	#test runs
 	pixels = (77,381,77+456,381+32)
 	main(pixels)
+	find_pixels(r"C:\Users\james\OneDrive\Documents\Coding Projects\Python Projects\Takeoff AI\ProjectManagementTools\highlight_extractor\pdf_input")

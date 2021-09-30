@@ -316,7 +316,7 @@ class text_counter():
 		#Check if Project Folder Exists
 		try:
 			self.divisionCreator(self.txtMainDir, division)
-			print("Division Folder DOES NOT EXIST, created new one")
+			print("Division Folder DOES NOT EXIST, created new one. Rerun")
 		except:
 			pass
 		
@@ -347,9 +347,9 @@ class text_counter():
 		for div in all_divisions:
 			div_class.textExtracMain_V2_JSON(Project,div)
 
-def main_V2():
-	project = r"6082 Sunnyville Civic Center"
-	division = r"LowVoltage"
+def main_V2(project):
+	"""Loops through all divisions inside the .JSON for the given project"""
+	
 
 	main_class = text_counter()
 	# Run through all divisions inside a .json
@@ -366,4 +366,5 @@ def main_V2_w_PDFtoTxt(project:str,rectangle,save_dir,input_pdf,output_txt = r"o
 	pass
 
 if __name__ == "__main__":
-	main_V2()
+	project = r"6082 Sunnyville Civic Center"
+	main_V2(project)
