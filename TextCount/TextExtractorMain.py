@@ -70,6 +70,11 @@ class text_variables():
 	def print_json(self,add_message: str=""):
 		"""Debug Helper: Prints the Classes JSON File"""
 		print(f"{add_message}Dictionary:\n{self.constants}")
+	def grab_all_divisions(self):
+		"""return list of all divisions found inside .json in"""
+		divisions = [div for div in self.constants.keys()]
+		print(f"Found Divisions: {divisions}")
+		return divisions
 
 	def count_main(self,division: str):
 		if (self.__isDivision(division) == True) and (self.load_division_words(division) != []):
@@ -80,9 +85,8 @@ class text_variables():
 
 class text_counter():
 	def __init__(self,
-	takeoff_AI_root_dir = r"C:\Users\james\OneDrive\Documents\
-		Coding Projects\Python Projects\Takeoff AI"
-		):
+	takeoff_AI_root_dir = r"C:\Users\james\OneDrive\Documents\Coding Projects\Python Projects\Takeoff AI"
+	):
 		self.takeoffAI_root_dir = takeoff_AI_root_dir
 		#^ROOT PROJECT DIRECTORY---CHANGE THIS!!!^#
 
@@ -275,6 +279,7 @@ class text_counter():
 			self.constants_template = r"text_constants.py"
 			self.templateDir = os.path.join(self.takeoffAI_root_dir,r"TextCount")
 			completeConstantPath = os.path.join(self.templateDir,self.constants_template)
+			print(f"test: {completeConstantPath}")
 			shutil.copyfile(completeConstantPath, constant_copy_path)
 			#time.sleep(1)
 			import sys
@@ -312,6 +317,8 @@ class text_counter():
 		try:
 			self.divisionCreator(self.txtMainDir, division)
 			print("Division Folder DOES NOT EXIST, created new one")
+		except:
+			pass
 		
 		# walker job folder setup .txt files location
 		self.text_folder = os.path.join(self.txtMainDir,division,self.text_folder)
@@ -320,19 +327,43 @@ class text_counter():
 
 		#Load Text_Search_List from JSON
 		json_path = os.path.join(self.txtMainDir,"Constants.json")
-		text_class = text_variables(json_path)
+		text_class = text_variables(json_path) #json_class initialization
 		keyWords = text_class.count_main(division)
 
 		#run text counter
 		self.MainTextExtractor(self.csv_save_folder,keyWords)
+	def main_V2_allDivisions(self,Project):
+		"""same as textExtractMain_V2_JSON, but loops through all divisions"""
+		#WORKING Directory for textExtraction files
+		self.txtMainDir = os.path.join(self.project_dir, Project ,self.MainExtractionFolder)
 
-def main():
-	pass
+		# Load JSON class
+		json_path = os.path.join(self.txtMainDir,"Constants.json")
+		text_class = text_variables(json_path) #json_class initialization
+		# grab all divisions
+		all_divisions = text_class.grab_all_divisions()
+		#loop through textExtracMain_V2_JSON
+		div_class = text_counter()
+		for div in all_divisions:
+			div_class.textExtracMain_V2_JSON(Project,div)
 
-
-if __name__ == "__main__":
+def main_V2():
 	project = r"6082 Sunnyville Civic Center"
 	division = r"LowVoltage"
 
 	main_class = text_counter()
-	main_class.textExtracMain_V2_JSON(project, division)
+	# Run through all divisions inside a .json
+	main_class.main_V2_allDivisions(project)
+
+def main_V1():
+	project = r"6082 Sunnyville Civic Center"
+	division = r"LowVoltage"
+
+	main_class = text_counter()
+	main_class.textExtracMain(project, division)
+
+def main_V2_w_PDFtoTxt(project:str,rectangle,save_dir,input_pdf,output_txt = r"output.txt"):
+	pass
+
+if __name__ == "__main__":
+	main_V2()

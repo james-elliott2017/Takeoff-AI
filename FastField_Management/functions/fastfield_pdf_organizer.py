@@ -57,9 +57,8 @@ def organize_files(input_dir,job_dir,file_ext=".pdf"):
 		move_class.move_file()
 	return True
 
-def main():
-	input_dir = r"S:\Personal Folders\FTP\Dailys"
-	daily_pdfs_dir = r"S:\Personal Folders\Job Dailys"
+def main(input_dir = r"S:\Personal Folders\FTP\Dailys",
+		daily_pdfs_dir = r"S:\Personal Folders\Job Dailys"):
 	NEW_FILE_FLAG = organize_files(input_dir,daily_pdfs_dir)
 	return NEW_FILE_FLAG #used with high level main
 

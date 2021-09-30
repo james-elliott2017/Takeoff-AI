@@ -2,8 +2,8 @@ import os
 import fitz
 
 class pdf_to_txt():
-	def __init__(self,directory: str,pdf_location: str,bounding_box = None):
-		self.dir = directory
+	def __init__(self,save_directory: str,pdf_location: str,bounding_box = None):
+		self.dir = save_directory
 		self.pdf_location = pdf_location
 		self.pdf_obj = self.__open_pdf()
 
@@ -21,8 +21,9 @@ class pdf_to_txt():
 	def __grab_text(self,fitz_page):
 		page_text = fitz_page.get_text("text",clip=self.text_rect,flags=0)
 		return page_text
-	def save_pixmap(self):
-		pixmap = self.pdf_obj[0].get_pixmap()
+	def save_pixmap(self,page_num=0):
+		pixmap = self.pdf_obj[page_num]
+		pixmap = pixmap.get_pixmap()
 		pixmap.save(os.path.join(self.dir,"output.png"))
 	def view_pixmap(self,windows_pc = True):
 		"""opens pixmap output.png inside paint if windows pc."""
@@ -43,11 +44,8 @@ class pdf_to_txt():
 
 		with open(save_path,'w') as f:
 			f.write(total_text)
-	def img_helper(self):
-		"""Takes first page of image, and saves in working directory"""
-		pass
 
-def main():
+def test_main():
 	"""
 	Opens a .pdf and given page numbers and text box will extract NON-OCR text and save into a .txt file
 	"""
@@ -66,6 +64,26 @@ def main():
 
 	###Loop Through Pages & Save to One Text File###
 	converter.main(path_out,start=0,stop=None) # run extractor, can designate which pages also
+def main(rectangle = None,save_dir = r"C:\Users\james\OneDrive\Documents\Coding Projects\Python Projects\Takeoff AI\ProjectManagementTools\highlight_extractor\pdf_input",
+	input_pdf = r"test_highlight.pdf",output_txt = r"output.txt"):
+	if rectangle == None:
+		print("Please find rectange dimensions, and than rerun IF you did not mean to convert the entire page")
+
+	path_in = os.path.join(save_dir,input_pdf)
+	path_out = os.path.join(save_dir,output_txt)
+
+	###Initialize Text & Save the First Page in as an image for width Extraction
+	converter = pdf_to_txt(save_dir,path_in) # instantiate
+	converter.save_pixmap() # save_pixmap for box dimensions
+	converter.view_pixmap(windows_pc = True) #WAITS FOR PAINT TO CLOSE, BEFORE CONTINUING
+def find_pixels(save_dir,input_pdf = r"test_highlight.pdf",output_txt = r"output.txt"):
+	path_in = os.path.join(save_dir,input_pdf)
+	path_out = os.path.join(save_dir,output_txt)
+
+	converter = pdf_to_txt(save_dir,path_in)
+	converter.save_pixmap() # save_pixmap for box dimensions
+	converter.view_pixmap(windows_pc = True)
 
 if __name__ == '__main__':
-	main()
+	pixels = (77,381,77+456,381+32)
+	main(pixels)

@@ -10,8 +10,9 @@ from TextCount.TextExtractorMain import text_counter
 project = r"5555 Test Project"
 division = r"Data_Floor" #text_extractor ONLY
 
-TEXT_FLAG = True
-AUTO_FLAG = False
+TEXT_FLAG = False
+AUTO_FLAG = True
+PDF_TO_TEXT_FLAG = False
 
 ###LOAD PROJECT###
 AutoCount_Class = img_count()
@@ -24,6 +25,7 @@ if AUTO_FLAG:
 
 ###TEXT EXTRACTOR###
 if TEXT_FLAG:
+	#PDF_to_text --> save to output location
 	text_class = text_counter()
 	text_class.textExtracMain(project, division)
 

@@ -5,7 +5,7 @@ from functions.fastfield_dataset_cleaner import main as update_clean_dataset
 
 def main():
 	UPDATE_CLEAN_DATASET = True
-	NEW_FILE_FLAG = pdf_org_main()
+	NEW_FILE_FLAG = pdf_org_main(daily_pdfs_dir="S:\Shared Folders\Steven\Job Dailys") # pdf_organizer_main() allows you to change input dir() & output dir()
 	#Update JSON Only if New Dailys Exist --> Replace with EventHandle() in Long Term
 	if NEW_FILE_FLAG:
 		raw_json_combiner_main()
