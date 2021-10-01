@@ -1,0 +1,16 @@
+This file serves as the steps to setting up "TakeoffAI" on your own computer
+
+STEP 1: Clone the directory to the location you want.
+
+STEP 2: Install Conda (if not already installed) & create enviroment with the given .yaml file
+    .batch files inside Fastfield_Management use "conda activate walker", change "walker" to "your_env_name" if using
+
+Step 3: Create a Projects Folder. For example, the orginal is this.
+    "C:\Users\james\OneDrive\Documents\Coding Projects\Python Projects\Takeoff AI\Walker Projects"
+    Note: You are NOT required to have the projects folder inside your Takeoff AI folder. I recommend keeping the folder local however, issues can arise if you use an online storage platform in forms of latency.
+    
+Step 4: Update the following files to have your new project folder path
+    a. Takeoff_Main.py --> (img_counts() --> project_dir="your projects folder path"
+    b. Takeoff_Main.ipynb --> (update walker_dir in imports cell to "your projects folder path"
+    
+YOU ARE READY TO USE Takeoff_AI !!!

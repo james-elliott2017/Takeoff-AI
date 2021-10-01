@@ -15,6 +15,17 @@ class JSON_EditError(Exception):
 	def __init__(self,json_path: str):
 		super().__init__(f"Json file either has empty division, does not exists, or is corrupted. Please update JSON file:\n{json_path}")
 
+class create_default_json:
+	def __init__(self):
+		"""default json for projects, used to create json file for  new projects"""
+		self.json_dict = {
+			"default":["search_1","search_2"]
+		}
+	def __create_json(self,save_dir,name="Constants.json"):
+		complete_path = os.path.join(save_dir,name)
+		with open(complete_path,'w') as f:
+			json.dump(self.json_dict,f)
+
 class text_variables():
 	def __init__(self,json_path: str):
 		self.json_path = json_path

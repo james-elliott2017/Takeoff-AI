@@ -11,9 +11,22 @@ import numpy as np
 import cv2
 import time
 import imutils
+import json
 
 #test imports only
 ## import icecream as ic
+
+class create_default_json:
+	def __init__(self,save_dir,file_name="Constants.json"):
+		"""helper class for img_count.create_project()"""
+		self.json_dict = {
+			"default":["search_1","search_2"]
+		}
+		self.__create_json(save_dir,name=file_name)
+	def __create_json(self,save_dir,name="Constants.json"):
+		complete_path = os.path.join(save_dir,name)
+		with open(complete_path,'w') as f:
+			json.dump(self.json_dict,f)
 
 class img_count:
 	def __init__(self,projects_dir=r"C:\Users\james\OneDrive\Documents\Coding Projects\Python Projects\Takeoff AI\Walker Projects"):
@@ -347,6 +360,12 @@ class img_count:
 				+ r"\\" + r"__init__.py" #TextExtractor_files location
 			#print(init)
 			open(init,'a').close()
+
+			#create json for textCount()
+			sub_folder = "TextExtractor_files"
+			complete_dir_path = os.path.join(project_directory,sub_folder)
+			create_default_json(complete_dir_path,file_name='Constants.json')
+			print(f"{project_name} Created")
 		except:
 			print("folder already exists")
 

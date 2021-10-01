@@ -8,14 +8,14 @@ from AutoCount.AutocountMain import img_count
 from TextCount.TextExtractorMain import text_counter
 
 project = r"5555 Test Project"
-division = r"Data_Floor" #text_extractor ONLY
+# division = r"Data_Floor" #text_extractor ONLY
 
-TEXT_FLAG = False
-AUTO_FLAG = True
+TEXT_FLAG = True
+AUTO_FLAG = False
 PDF_TO_TEXT_FLAG = False
 
 ###LOAD PROJECT###
-AutoCount_Class = img_count()
+AutoCount_Class = img_count(projects_dir=r"C:\Users\james\OneDrive\Documents\Coding Projects\Python Projects\Takeoff AI\Walker Projects")
 working_dir = AutoCount_Class.create_project(project) #works as a loader also
 
 if AUTO_FLAG:
@@ -27,7 +27,7 @@ if AUTO_FLAG:
 if TEXT_FLAG:
 	#PDF_to_text --> save to output location
 	text_class = text_counter()
-	text_class.textExtracMain(project, division)
+	text_class.main_V2_allDivisions(project)
 
 ###OCR-Extractor###
 # coming soon
