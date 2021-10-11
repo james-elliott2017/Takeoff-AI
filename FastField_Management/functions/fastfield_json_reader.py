@@ -59,13 +59,6 @@ class json_combiner(open_JSON):
 	def __print__(self,var_title,variable_name):
 		print(f"Variable Tital {var_title}\n:{variable_name}")
 
-
-def event_main():
-	input_dir = r"S:\Personal Folders\FTP\Dailys"
-	database_dir = r"S:\Personal Folders\Databases"
-	daily_events_file = r"daily_list.pkl"
-	events_loader(input_dir,os.path.join(database_dir,daily_events_file))
-
 def single_json():
 	input_json_path = r"S:\Personal Folders\FTP\Dailys\6087_Amazon warehouse stockton_Daily_09_07_2021.json"
 	json_cls = open_JSON(input_json_path)
