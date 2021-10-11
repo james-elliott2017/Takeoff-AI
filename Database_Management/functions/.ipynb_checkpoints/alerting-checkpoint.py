@@ -1,0 +1,1 @@
+# email alerts, works hand-in-hand with job_calculations

@@ -1,73 +1,10 @@
 # JSON reader & Panda Creator + Updater
-
 import json
 import pandas as pd
-import pickle as pck
 import os
-import shutil
 from typing import List
+from new_daily_handler import event_main
 
-class event_handler:
-	def __init__ (self,events = []):
-		self.events = list(events)
-	
-	def update_handler(self, new_event):
-		"""takes in event name and adds it to events log if it doesn't exist"""
-		if new_event in self.events:
-			return None
-		self.events.append(new_event)
-		return True
-	def pickle_save(self,pickle_path,file_name="event_list.pkl"):
-		if not pickle_path.endswith(".pkl"):
-			complete_path = os.path.join(pickle_path,file_name)
-		else:
-			complete_path = pickle_path
-		save_file = open(complete_path,"wb")
-		pck.dump(self.events,save_file)
-		save_file.close()
-
-class events_loader(event_handler):
-	def __init__(self,input_dir,pickle_complete_file):
-		self.input_dir = input_dir
-		self.pickle_complete_file = pickle_complete_file
-
-		initial_events = self.grab_files(input_dir,file_type=".json")
-		super().__init__(self.open_event_handler(pickle_complete_file))
-
-		self.new_files = [f for f in initial_events if f not in self.events] #grab files not in events
-		print(f"New files: {self.new_files}")
-		self.pickle_save(pickle_complete_file)
-		#FIX ERROR WHERE NOT SAVING/NOT OPENING THE SAVED EVENTS?
-
-	@staticmethod
-	def open_event_handler(event_pkl_path):
-		"""
-		Helper Function to Open an Already existing event handler and return instant of event_handler
-		"""
-		try:
-			loaded_list = pck.load(event_pkl_path)
-			handler = event_handler(events=loaded_list)
-			return handler
-		except:
-			print("Event Handler Does Not Exist. Please make sure your event_pkl_path is correct.\
-				If this is your first run of the event_handler, please run 'initialize_handler'.")
-			print("returning empty event_handler")
-			return []
-	@staticmethod
-	def grab_files(input_dir,file_type=".json"):
-		"""Grab all files of a specified type"""
-		json_files = [f for f in os.listdir(input_dir) if f.endswith(file_type)]
-		return json_files
-	
-def hard_reset():
-	"""saves an empty pickle [], so you can rerun on all .JSONs"""
-	instance = event_handler()
-	instance.pickle_save(database_dir,file_name="daily_list.pkl")
-
-def initialize_handler():
-	"""Run event handler to recreate an entire Dataset"""
-	hard_reset()
-##############################END OF EVENT HANDLER#####################################
 class open_JSON():
 	def __init__(self,json_file):
 		self.json_file_location = json_file
@@ -90,17 +27,28 @@ class open_JSON():
 			print(f"field {idx}: {field}")
 
 class json_combiner(open_JSON):
-	def __init__(self,json_file_dir):
+	def __init__(self,json_file_dir,event_handler_files:List = None):
 		"""takes in a list of json file names, and their directory, and returns a list of open jsons in a list"""
 		self.dir = json_file_dir
-		self.files = self.grab_files(self.dir,file_ext=".json")
+		if event_handler_files == None:
+			self.files = self.grab_files(self.dir,file_ext=".json")
+		else:
+			#code for event_handler updating instead of combining all files
+			self.files = event_handler_files
+		# combine list of .jsons into a singular list of jsons
 		self.complete_paths = [os.path.join(self.dir,f) for f in self.files] #hard path joiner
-		#create list of information from json files in the complete_paths list
 		self.json_records = [single_json.json_info for single_json in [open_JSON(json_obj) for json_obj in self.complete_paths]]
-	
-	def to_dataframe(self,filename="json_data.pkl"):
+	def to_existing_dataframe(self,existing_csv_path):
+		"""append new json's to an existing dataframe()"""
+		dataset = pd.read_csv(existing_csv_path)
+		new_data = self.to_dataframe()
+		final_dataset = dataset.append(new_data)
+		# print(f"existing data shape:{dataset.shape}")
+		# print(f"new data shape: {new_data.shape}")
+		# print(f"Updated Dataset Shape: {final.shape}")
+		return final_dataset
+	def to_dataframe(self):
 		"""returns pandas dataframe and saves it file inside dir"""
-		save_path = os.path.join(self.dir,filename)
 		self.dataframe = pd.DataFrame.from_records(self.json_records)
 		return self.dataframe
 	@staticmethod
@@ -122,11 +70,23 @@ def single_json():
 	input_json_path = r"S:\Personal Folders\FTP\Dailys\6087_Amazon warehouse stockton_Daily_09_07_2021.json"
 	json_cls = open_JSON(input_json_path)
 	print(json_cls.json_info)
+def raw_json_event_only_combiner(json_dir_path = r"S:\Personal Folders\FTP\Dailys",
+	database_dir = r"S:\Personal Folders\Databases"):
+	"""Appends .json files to existing dataset only if they haven't been added before.
+	new_daily_handler.py holds all information regarding the event_handler used"""
+	handler_files = event_main() #grabs files that are not in dataset
+	print(f"New Files:\n{handler_files}")
 
-def raw_json_combiner_main():
+	json_list = json_combiner(json_dir_path,event_handler_files=handler_files)	
+	updated_dataset = json_list.to_existing_dataframe(os.path.join(database_dir,"Raw_Dataset.csv"))
+
+	updated_dataset.to_csv(os.path.join(database_dir,"Raw_Dataset.csv"))
+	updated_dataset.to_excel(os.path.join(database_dir,"Raw_Dataset.xlsx"))
+	print("Raw Dataset Updated")
+
+def raw_json_combiner_main(json_dir_path = r"S:\Personal Folders\FTP\Dailys",
+	database_dir = r"S:\Personal Folders\Databases"):
 	"""Main Function for combining json's inside the same folder"""
-	json_dir_path = r"S:\Personal Folders\FTP\Dailys"
-	database_dir = r"S:\Personal Folders\Databases"
 	json_list = json_combiner(json_dir_path)
 	
 	data_joined = json_list.to_dataframe()

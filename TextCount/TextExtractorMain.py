@@ -154,14 +154,16 @@ class text_counter():
 		"""
 		Exports data as list and uppercase
 		"""
-		a_file = open(file, "r",encoding="utf-8")
-
+		a_file = open(file, "r")#,encoding="utf-8")
 		list_of_lists = []
 		for line in a_file:
-			line = str.upper(line)
-			stripped_line = line.strip()
-			line_list = stripped_line.split()
-			list_of_lists.append(line_list)
+			try:
+				line = str.upper(line)
+				stripped_line = line.strip()
+				line_list = stripped_line.split()
+				list_of_lists.append(line_list)
+			except:
+				print(f"the following line failed to be cleaned:\n{line}")
 
 		a_file.close()
 

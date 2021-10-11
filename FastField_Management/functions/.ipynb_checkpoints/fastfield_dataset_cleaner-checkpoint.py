@@ -13,24 +13,20 @@ cols_to_keep = ['userName', #'Unnamed: 0', ### add if needed
 	'JI_dailyDate', 'JI_global_foreman_ReportBy', 'JI_global_project_manager', 'JI_job_number', # if needed
 	'JI_project_name', 
 	'FA_Access_Doors_Pulled', 'FA_Access_fire_alarm_cable_pulled_ft',
-	'copper_terminated','copper_test_label' ,'copper_cables_roughed',
+	'copper_TTL', 'copper_cables_roughed',
 	'crew_names', 'crew_total_daily_hours', 'crew_total_members_on_site', 
 	'TimeMaterial_Desciption', 'TimeMaterial_Hours', 
 	'defect_desciption', 'defect_drawing_ref', 'defect_location', 'defect_spec_num', 
 	'delay_calendar_ext', 'delay_company_at_fault', 'delay_man_hours', 'delay_weather_conditions', 
-	'delay_weather_notes', 'delay_why',
+	'delay_weather_notes', 'delay_why', 
 	'devices_AV_installed', 'devices_CCTV_installed', 'devices_fire_alarm_installed', 'devices_wap_installed',  
-	'fiber_terminated','fiber_test_labeled', 'fiber_roughed_FT',
+	'fiber_TTL', 'fiber_roughed_FT',
 	'foreman_additional_comments', 'foreman_completion_date', 'foreman_signature',
 	'idf_cabletray_installed_ft', 'idf_cop_patch_panels_term', 'idf_fiber_panels_termed', 'idf_racks_installed',  
-	'walker_inline_cover_walkerInfo', 'work_materials_on_site', 'work_other'] #cols to keep
+	'walker_inline_cover_walkerInfo', 'work_materials_on_site', 'work_special_instructions'] #cols to keep
 # HELPER FUNCTIONS TO CREATE DICTIONARY OF ABOVE, AND CHANGE ONLY THE ONES YOU WANT TO RENAME
 cols_name_map = dict(zip(cols_to_keep,cols_to_keep))
-###DROP NAME CHANGES HERE###
-cols_name_map['JI_job_number'] = "Job Number"
-cols_name_map['JI_dailyDate'] = "Daily Date"
-cols_name_map['TimeMaterial_Desciption'] = 'T&M Description'
-cols_name_map['TimeMaterial_Hours'] = 'T&M Hours'
+# cols_name_map['Unnamed: 0'] = "Row_ID"
 # print(cols_name_map)
 def main(raw_dataset_path = r"S:\Personal Folders\Databases\Raw_Dataset.csv", #.csv format
 	cleaned_data_path = r"S:\Personal Folders\Databases\Cleaned_Dataset"): #.csv & excel format):

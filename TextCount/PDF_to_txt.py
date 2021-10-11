@@ -7,7 +7,10 @@ class pdf_to_txt():
 		self.pdf_location = pdf_location
 		self.pdf_obj = self.__open_pdf()
 
-		self.text_rect = bounding_box #if None searches whole page
+		self.text_rect = bounding_box
+		if bounding_box != None:
+			self.text_rect = fitz.Rect(bounding_box) #if None searches whole page
+		print(f"rect:{self.text_rect}")
 	def update_text_rect(self,new_rect: tuple):
 		"""x0,y0,x1,y1 should be integers"""
 		x0,y0,x1,y1 = new_rect
@@ -19,7 +22,7 @@ class pdf_to_txt():
 		return pdf_obj
 
 	def __grab_text(self,fitz_page):
-		page_text = fitz_page.get_text("text",clip=self.text_rect,flags=0)
+		page_text = fitz_page.get_text("text",clip=self.text_rect,flags=None)
 		return page_text
 	def save_pixmap(self,page_num=0):
 		pixmap = self.pdf_obj[page_num]
@@ -42,8 +45,13 @@ class pdf_to_txt():
 		for page in self.pdf_obj.pages(start=start,stop=stop):
 			total_text += self.__grab_text(page)
 
-		with open(save_path,'w') as f:
-			f.write(total_text)
+		encoded_text = total_text.encode("utf-8")
+		try:
+			with open(save_path,'w') as f:
+				f.write(total_text)
+		except:
+			print("file failed to save. Please review print")
+			print(f"Test Start:\n{total_text}")
 
 def test_main():
 	"""
