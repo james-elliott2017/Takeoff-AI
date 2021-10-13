@@ -3,7 +3,10 @@ import json
 import pandas as pd
 import os
 from typing import List
-from new_daily_handler import event_main
+if __name__ == "functions.fastfield_json_reader":
+	from functions.new_daily_handler import event_main
+else:
+	from new_daily_handler import event_main
 
 class open_JSON():
 	def __init__(self,json_file):
