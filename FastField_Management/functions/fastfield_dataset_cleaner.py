@@ -1,6 +1,5 @@
 from typing import List, Dict
 import pandas as pd
-import numpy as np
 
 #Open "Raw Dataset" and Scrub it into "Clean Dataset"
 

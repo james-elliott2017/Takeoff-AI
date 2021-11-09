@@ -2,12 +2,8 @@
 #pdf_extractor
 
 import os
-import sys
 import shutil
-import time
-import numpy as np
 import pandas as pd
-import re
 import json
 from typing import List
 
