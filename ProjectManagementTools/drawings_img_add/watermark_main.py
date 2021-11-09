@@ -4,9 +4,13 @@ import fitz
 import os
 
 class watermark():
-	def __init__(self):
+	def __init__(self,img_type=0):
+		"""img_type: 0 = Horzontal, 1 = vertical"""
 		self.update_dir()
-		self.img_logo = self.horz_img
+		if img_type == 0:
+			self.img_logo = self.horz_img
+		else:
+			self.img_logo = self.vert_img
 
 		# self._instance_info(config_img=True)
 
@@ -63,6 +67,7 @@ class watermark():
 			#insert logo
 			new_doc[i].insert_image(logo_box, pixmap=logo_px,keep_proportion=False)
 			new_doc.save(self.output_pdf,garbage=4,deflate=True)
+			print(f"Page {i} Complete")
 
 		document.close()
 		new_doc.close()
@@ -103,7 +108,7 @@ class watermark():
 		"""
 		pass
 
-if __name__ == '__main__':
+def test_func():
 	watermark_class = watermark()
 	
 	#USE MS PAINT FOR PIXEL LOCATIONS
@@ -119,3 +124,25 @@ if __name__ == '__main__':
 	
 	watermark_class.add_img(logo_box,wb=white_box)
 	print("Walker Insert Complete")
+def watermark_main(input_pdf):
+	wMark = watermark(img_type=1) #0 for horizontal, 1 for vertical
+	#USE MS PAINT FOR PIXEL LOCATIONS
+	x,y = (2700,280) ##LOGO POSITION (top left corner)
+	w,h = wMark.get_img_dims(wMark.img_logo)
+	w,h = (219,1045)
+	#whiteout area on left
+	wht_x,wht_y = (2625,275) #top_left corner
+	white_size = (450,1147)
+
+	white_box = fitz.Rect(wht_x,wht_y,wht_x+white_size[0],wht_y+white_size[1])
+	logo_box = fitz.Rect(x,y,x+w,y+h)
+
+	#Input Input Pdf Location
+	wMark.input_pdf = input_pdf
+	
+	wMark.add_img(logo_box,wb=white_box)
+	print("Walker Insert Complete")
+
+if __name__ == '__main__':
+	input_pdf = r"S:\Shared Folders\John\Quotes\5400 - John\5416 SCVMC Bldg M GI & Bronch\Submittals\Shop Drawings\RAW_08_20_2021_Drawings.pdf"
+	watermark_main(input_pdf)

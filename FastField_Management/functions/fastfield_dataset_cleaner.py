@@ -1,8 +1,6 @@
 from typing import List, Dict
-import os
 import pandas as pd
 import numpy as np
-import copy
 
 #Open "Raw Dataset" and Scrub it into "Clean Dataset"
 
@@ -29,17 +27,40 @@ cols_name_map = dict(zip(cols_to_keep,cols_to_keep))
 ###DROP NAME CHANGES HERE###
 cols_name_map['JI_job_number'] = "Job Number"
 cols_name_map['JI_dailyDate'] = "Daily Date"
+cols_name_map['JI_global_foreman_ReportBy'] = 'Report By (Foreman)'
 cols_name_map['TimeMaterial_Desciption'] = 'T&M Description'
 cols_name_map['TimeMaterial_Hours'] = 'T&M Hours'
-# print(cols_name_map)
+cols_name_map['userName'] = 'Account'
+
+##############################################################################################################################
+###########################HELPER FUNCTIONS FOR CLEANING TEXT IN COLUMNS######################################################
+def column_single_list_unpacker(pd_dataset,column_name_tuple=('JI_global_foreman_ReportBy','JI_global_project_manager')):
+	for row,cols_info in pd_dataset.iterrows():#dataset rows
+		for col in column_name_tuple:# columns to unpack
+			str_data = cols_info[col]
+			cleaned_str = str_data.strip("]['") #Add .split(', ') for list solution instead, but this is quicker
+			pd_dataset.at[row, col] = cleaned_str
+	return pd_dataset
+
+def column_helper(pd_dataset,column_name_tuple=('JI_global_foreman_ReportBy','JI_global_project_manager')):
+	pd_dataset = column_single_list_unpacker(pd_dataset,column_name_tuple=column_name_tuple)
+	return pd_dataset
+##############################################################################################################################
+
 def main(raw_dataset_path = r"S:\Personal Folders\Databases\Raw_Dataset.csv", #.csv format
 	cleaned_data_path = r"S:\Personal Folders\Databases\Cleaned_Dataset"): #.csv & excel format):
 	data = pd.read_csv(raw_dataset_path)
 
+	# UPDATE DATATYPES FOR VIEWING PURPOSES (["name"] becomes "name", etc.)
+	data = column_helper(data)
+
+	# UPDATE COLUMN NAMES
 	clean_data = data.filter(cols_to_keep)
 	clean_data = clean_data.rename(columns=cols_name_map)#,inplace=True) #use list to create order
 	# print(clean_data.head())
 	# print(clean_data.columns)
+
+	# Save Cleaned Dataset
 	clean_data.to_csv("".join([cleaned_data_path,".csv"]))
 	clean_data.to_excel("".join([cleaned_data_path,".xlsx"]))
 
