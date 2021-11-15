@@ -30,7 +30,7 @@ cols_name_map['JI_global_foreman_ReportBy'] = 'Report By (Foreman)'
 cols_name_map['TimeMaterial_Desciption'] = 'T&M Description'
 cols_name_map['TimeMaterial_Hours'] = 'T&M Hours'
 cols_name_map['userName'] = 'Account'
-
+cols_name_map['JI_project_name'] = 'Project Name'
 ##############################################################################################################################
 ###########################HELPER FUNCTIONS FOR CLEANING TEXT IN COLUMNS######################################################
 def column_single_list_unpacker(pd_dataset,column_name_tuple=('JI_global_foreman_ReportBy','JI_global_project_manager')):

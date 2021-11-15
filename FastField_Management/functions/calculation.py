@@ -3,11 +3,6 @@ import pandas as pd
 from typing import Union,Tuple
 from copy import deepcopy
 
-
-class load_csv:
-	def __init__(self,csv_path):
-		self.csv_path = csv_path
-		self.dataset = pd.read_csv(csv_path)
 class pd_single_column:
 	def __init__(self,dataset: pd.DataFrame,non_zeros: bool = True) -> None:
 		"""non_zeros: parameter True implies summing will ignore columns that don't have a value > 0.
@@ -15,6 +10,10 @@ class pd_single_column:
 		"""
 		self.dataset = dataset.fillna(0)
 		self.non_zeros = non_zeros
+
+		#Column Defaults for ease-of-use
+		self.job_num_col_name = "Job Number"
+		self.job_name_col_name = "Project Name"
 	def get_mask(self,col_to_mask: str,condition: Union[int,float] = 0):
 		"""returns a mask of the given column based on numeric condition"""
 		mask = self.dataset[col_to_mask] > condition
@@ -37,9 +36,39 @@ class pd_single_column:
 		col_len = len(self.dataset[col_name])
 		average = float(sum/col_len)
 		return average
+	def get_job(self,job_number,job_num_column_name: str = None):
+		"""return rows of given job_number"""
+		if job_num_column_name == None:
+			job_num_column_name = self.job_num_col_name
+
+		job_rows = self.dataset.loc[self.dataset[job_num_column_name] == job_number]
+		return job_rows
+	def __get_non_duplicates(self,col_name:str) -> list:
+		"""Returns non-duplicate values of a specified column as a list"""
+		values = self.dataset[col_name].tolist()
+		values = list(set(values)) #trick to remove duplicates
+		return values
+	def get_job_nums(self,col_name:str=None) -> list:
+		"""returns all job numbers found in dataset"""
+		if col_name == None:
+			col_name = self.job_num_col_name
+		values = self.__get_non_duplicates(col_name)
+		return values
+	def get_job_names(self,col_name:str=None) -> list:
+		"""returns all job names found in dataset"""
+		if col_name == None:
+			col_name = self.job_name_col_name
+		values = self.__get_non_duplicates(col_name)
+		return values
+
+
 class pd_multi_column(pd_single_column):
 	def __init__(self, dataset: pd.DataFrame,non_zeros: bool = True) -> None:
-	    super().__init__(dataset,non_zeros=non_zeros)
+		"""
+		Pandas Extension to take labor averages across multiple columns, but can be used for any use case
+		where you need to sum() columns based on conditionals & average across a different column.	
+		"""
+		super().__init__(dataset,non_zeros=non_zeros)
 	def superdivide(self,col_1_name,col_2_name) -> Union[float,int]:
 		"""Takes 2 Columns. Sums them. ANd than divides column 1 by column 2
 		non_zeros applies a mask is given based on col_1_name, where the value is greater than zero"""
@@ -66,7 +95,7 @@ class pd_multi_column(pd_single_column):
 		"""Takes multiple column names + one column that must be greater than zero & returns mask of all conditions met. IE -> mask.all()"""
 		nan = float('nan') # Constant
 		eval_str = f"(self.dataset['{non_zero_col}'] > 0)"
-		#| self.dataset['{col}'].isna()#USE FOR NAN CASE BUT NOT WORKING
+		#| self.dataset['{col}'].isna()#USE FOR NAN CASE BUT not needed if you replace NaN with 0's
 		for col in zero_columns:
 			eval_str += f" & (self.dataset['{col}'] == 0)" # added per iterable
 		mask = eval(eval_str)
@@ -89,29 +118,26 @@ class pd_multi_column(pd_single_column):
 			current_col = local_list.pop(local_list.index(col))
 			all_labor_per_hour[col] = self.superdivide_multimask(current_col,local_list,hours_col)
 		return (all_labor_per_hour,units)
-	def view_jobs(self,dataset: pd.DataFrame = None,job_col: str = "Job Number"):
+	def view_jobs(self,dataset: pd.DataFrame = None,job_col: str = None):
 		if type(dataset) == type(None):
 			# New Dataset Use
 			dataset = self.dataset
+		if job_col == None:
+			job_col = self.job_num_col_name
+
 		all_nums = dataset[job_col]
 		job_nums = []
 		[job_nums.append(num) for num in all_nums if num not in job_nums]
 		return job_nums
 
-
+class load_csv:
+	def __init__(self,csv_path):
+		self.csv_path = csv_path
+		self.dataset = pd.read_csv(csv_path)
 
 class calculations(load_csv):#job number specific
 	def __init__(self,csv_path):
 		super().__init__(csv_path)
-	def grab_job_rows(self,job_number,job_num_column_name="Job Number"):
-		"""return rows of given job_number"""
-		job_rows = self.dataset.loc[self.dataset[job_num_column_name] == job_number]
-		return job_rows
-	def sum(self,job_number,col_to_sum):
-		"""sums column based on job number conditional"""
-		job_rows = self.grab_job_rows(job_number)
-		col_sum = job_rows[col_to_sum].sum()
-		return col_sum
 
 def test_main():
 	data_path = r"S:\Personal Folders\Databases\Cleaned_Dataset_testing.csv"
