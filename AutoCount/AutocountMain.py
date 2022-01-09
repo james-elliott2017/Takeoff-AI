@@ -3,8 +3,6 @@
 # 1) Organized in class structure for ease of use
 # 2) Added windowing feature for AutoCount if wanted.
 #	Allows a portion of images to be searched over, instead of the complete thing
-
-from pathlib import Path
 import os
 import pandas as pd
 import numpy as np
@@ -12,12 +10,13 @@ import cv2
 import time
 import imutils
 import json
+from typing import List, Dict,Iterator,Tuple,Union
 
 #test imports only
 ## import icecream as ic
 
 class create_default_json:
-	def __init__(self,save_dir,file_name="Constants.json"):
+	def __init__(self,save_dir: str,file_name: str ="Constants.json"):
 		"""helper class for img_count.create_project()"""
 		self.json_dict = {
 			"default":["search_1","search_2"]
@@ -29,8 +28,8 @@ class create_default_json:
 			json.dump(self.json_dict,f)
 
 class img_count:
-	def __init__(self,projects_dir=r"C:\Users\james\OneDrive\Documents\Coding Projects\Python Projects\Takeoff AI\Walker Projects"):
-		self.template_color = [(0,0,255),(0,255,0),(255,0,0),(255, 157, 214),(0,255,255),
+	def __init__(self,projects_dir: str =r"C:\Users\james\OneDrive\Documents\Coding Projects\Python Projects\Takeoff AI\Walker Projects"):
+		self.template_color:Iterator[Tuple[int,int,int]] = [(0,0,255),(0,255,0),(255,0,0),(255, 157, 214),(0,255,255),
 			(255,0,255),(79, 0, 0),(79, 77, 0),(79, 194, 194),(193, 128, 194),\
 			(42, 178, 254),(210,210,0),(210,0,210),(0,210,210)\
 		,(150,150,150),(0,150,150),(150,0,150),(150,150,0),(80,0,0),(80,80,80),(80,0,80)]
@@ -39,11 +38,13 @@ class img_count:
 		#Initialization Code for Creating New Projects & Accessing Old Projects -->create_project()
 		self.project_folder_names = ["symbol_images","plans_images","highlights_final","TextExtractor_files","Misc_Files"]
 		self.primary_directory = projects_dir
+		self.symbol_sub_folder = r"symbol_images"
+		self.imgs_with_highlights_sub_folder = r"highlights_final"
 
 		#Matching Variables CAN be changed if you wish
 		self.angle_iteration = 90
 		self.threshold = 0.80
-	def __black_filter(self, image_location,location = False):
+	def __black_filter(self, image_location: str,location:bool = False):
 		"""
 		input: image
 		Removes all other colors except for a black threshold
@@ -66,16 +67,14 @@ class img_count:
 		final_image =cv2.bitwise_not(mask)
 
 		return final_image
-	def __load_images_from_folder(self, folder):
-	    images = []
-	    for filename in os.listdir(folder):
-	        img = cv2.imread(os.path.join(folder,filename))
-	        if img is not None:
-	            images.append(img)
-
-
-	    return images
-	def __Convert(self,lst_x,lst_y):
+	def __load_images_from_folder(self, folder: str):
+		images = []
+		for filename in os.listdir(folder):
+			img = cv2.imread(os.path.join(folder,filename))
+			if img is not None:
+				images.append(img)
+		return images
+	def __Convert(self,lst_x: List[int],lst_y:List[int]) -> Tuple[List[int],List[int]]:
 		it_x = iter(lst_x)
 		it_y = iter(lst_y)
 
@@ -84,11 +83,8 @@ class img_count:
 
 		x_values = list(res_dct.keys())
 		y_values = list(res_dct.values())
-		#print(x_values)
-		#print(y_values)
-
-		return [x_values,y_values]
-	def __tuple_seperator(self,loc):
+		return (x_values,y_values)
+	def __tuple_seperator(self,loc: Tuple[np.ndarray,np.ndarray]) -> Union[int,np.array]:
 		"""
 		loc: tuple of 2 ndarrays() for x,y coordinates
 		"""
@@ -100,18 +96,19 @@ class img_count:
 		else:
 			return loc
 		#intersection code --- checks for duplicates so one can get an accurate count
-	def __intersected(self,bottom_left1, top_right1, bottom_left2, top_right2):
-	    if top_right1[0] < bottom_left2[0] or bottom_left1[0] > top_right2[0]:
-	        return 0
+	def __intersected(self,bottom_left1:int, top_right1:int, bottom_left2:int, top_right2:int):
+		if top_right1[0] < bottom_left2[0] or bottom_left1[0] > top_right2[0]:
+			return 0
 
-	    if top_right1[1] < bottom_left2[1] or bottom_left1[1] > top_right2[1]:
-	        return 0
+		if top_right1[1] < bottom_left2[1] or bottom_left1[1] > top_right2[1]:
+			return 0
+		return True
 
-	    return True
-
-	def __visual_updater(self,image,loc,squareColor,w,h):
+	def __visual_updater(self,image: np.ndarray,loc:np.ndarray,squareColor:Tuple[int,int,int],w:int,h:int) -> int:
 		"""
-		updates output highlight/resize & counts for specific angle iteration
+		Updates Counts based on different iterations of a resized counter-object. Makes sure that 2 images do not intersersect.
+		Inputs: Image_1 & Found Objects Location for Intersection check, Color of Square marking for output_highlights if new object.
+		Output: Count of None-Intersecting Objects
 		"""
 		matches = []
 		x = 0
@@ -131,7 +128,8 @@ class img_count:
 				x += 1
 		return x
 
-	def __image_rotator_templateMatch(self,picture, template):
+	def __image_rotator_templateMatch(self,picture:np.ndarray, template:np.ndarray):
+		"""Takes original image & template and runs a convolution of the two and returns percentage of match."""
 		x_total = []; y_total = []
 		x_tmp = []; y_tmp = []
 
@@ -139,7 +137,6 @@ class img_count:
 		for angle in np.arange(0,360,self.angle_iteration):
 			#print("angle:",angle)
 			rotated_template = self.__rotate_image(template, angle)
-			#rotated_template = imutils.rotate_bound(template, angle)
 			res = cv2.matchTemplate(picture,rotated_template,cv2.TM_CCOEFF_NORMED)
 			#Start of Box and Count Coded
 			loc = np.where(res >= self.threshold)
@@ -154,38 +151,30 @@ class img_count:
 				y_total = np.concatenate((y_tmp[0], y_total))
 				x_tmp = []; y_tmp = []
 		#End of For Loop, combines rotated symbol matches together and filters duplicates
-
+		# Organize Found Matches that meet Threshold
 		loc_local_symbol = (np.array(x_total, dtype=np.int64), np.array(y_total, dtype=np.int64))
-		#print("loc_combined:",loc_local_symbol)
 		loc_local_symbol = self.__tuple_seperator(loc_local_symbol)
-		#print("loc_filtered:",loc_local_symbol)
-		#print("Symbol Complete")
 		return loc_local_symbol
-
-	def __rotate_image(self,mat, angle):
-	    """
-	    Rotates an image via cv2.rotate(mat,dict()) (angle in degrees)
-	    """
-	    #print("angle:", angle)
-	    symbol_rotation = self.rotation_list.get(angle)
-	    #print("self.rotation_list:", symbol_rotation)
-
-	    if angle != 0:
-	    	output = cv2.rotate(mat, symbol_rotation)
-	    else:
-	    	output = mat
-	   
-	    return output
-
-	############################
-	#######start of code########
-	############################
-	def __image_count(self,plans, page_count,project_directory,black_scrub = True):
+	def __rotate_image(self,mat:np.ndarray, angle: Dict[int,int])-> np.ndarray:
 		"""
-		plans,page_count,projDir
+		Rotates an image via cv2.rotate(mat,dict()) (angle in degrees)
 		"""
+		symbol_rotation = self.rotation_list.get(angle)
+		if angle != 0:
+			output = cv2.rotate(mat, symbol_rotation)
+		else:
+			output = mat
+		return output
+
+	#Main Loop ---> Needs to be cleaned, and possibly seperated into another Class and than inherited.
+	def __image_count(self,plans:str, page_count:int,black_scrub:bool = True) -> List[int]:
+		"""
+		plans (.png path),page_count (int),projDir (string path)
+		Output: A single Pages Counts as a List. ALL Symbols
+		"""
+		temp_img_file = r".\filter_temp.png" #temp file saved between loops
 		#COLLECT IMAGES AS LIST
-		symbol_picture_directory = os.path.join(project_directory,r"symbol_images")
+		symbol_picture_directory = os.path.join(self.projDir,self.symbol_sub_folder)
 		folder = os.listdir(symbol_picture_directory)
 		#print("folder =", folder)
 
@@ -193,7 +182,7 @@ class img_count:
 
 		###Folder Settings for Saved Highlights### --- Allocation for Multiple Highlighted Pages
 		h_count = page_count
-		highlightsPath = os.path.join(project_directory,r"highlights_final")
+		highlightsPath = os.path.join(self.projDir,self.imgs_with_highlights_sub_folder)
 		highlights = 'highlights' + "_" + str(h_count) + ".jpg"
 		fileHighlights = os.path.join(highlightsPath ,highlights)
 
@@ -241,8 +230,8 @@ class img_count:
 							tmp_img_gray = cv2.imread(fileHighlights)
 							tmp_img_gray = cv2.cvtColor(tmp_img_gray,cv2.COLOR_BGR2GRAY)
 
-						cv2.imwrite(r".\filter_temp.jpeg", tmp_img_gray) #deleted at end of function
-						tmp_img_gray = cv2.imread(r".\filter_temp.jpeg")
+						cv2.imwrite(temp_img_file, tmp_img_gray) #deleted at end of function
+						tmp_img_gray = cv2.imread(temp_img_file)
 						img_gray = cv2.cvtColor(tmp_img_gray, cv2.COLOR_BGR2GRAY)
 							#OLD VERSION PRE BLACK FILTER#####################################################
 						#img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2GRAY)
@@ -303,12 +292,14 @@ class img_count:
 			print("local_max = ", best_counts)
 			print("folder =", symbol_file)
 
-		os.remove(r".\filter_temp.jpeg")
+		os.remove(temp_img_file)
 		return final_symbol_counts
-	#Tracker ending
 
-	def __search_multiple_pages(self,plans_file_names,plans_folder,projDir):
-
+	def __search_multiple_pages(self,plans_file_names:Iterator[str],plans_folder:str)-> Dict[str,int]:
+		"""
+		Wrapper to allow page counts to work with just directory and img file names.
+		Output: dict("Page Name", int(total counts for each symbol)
+		"""
 		d = dict()
 		page_count = 0
 		final_counts = []
@@ -324,7 +315,7 @@ class img_count:
 
 
 			##############################################################################################
-			page_total = self.__image_count(plans, page_count,projDir,black_scrub=False)
+			page_total = self.__image_count(plans, page_count,black_scrub=False)
 			print("page_total =", page_total)
 
 			final_counts.append(page_total)
@@ -380,26 +371,27 @@ class img_count:
 		else:
 			(pd.DataFrame.from_dict(data=my_dict, orient='index')
 			   .to_csv(header=header))
-	def run_counts(self, projDir,is_dir = True):
+	def run_counts(self, projDir:str,is_dir:bool = True) -> None:
 		"""
 		Should follow directly after create_project
 		projDir: output of create_project, input will be passed directly into create_project
 		"""
 		if is_dir == False:
 			projDir = self.create_project(projDir)
+		self.projDir = projDir #Directory Name with Project Number in Path
 
-		plans_folder = os.path.join(projDir,r"plans_images")
+		plans_folder = os.path.join(self.projDir,r"plans_images")
 		plansFiles = os.listdir(plans_folder)
 
-		output = self.__search_multiple_pages(plansFiles,plans_folder,projDir)
+		output = self.__search_multiple_pages(plansFiles,plans_folder)
 
-		symbol_picture_directory = os.path.join(projDir,r"symbol_images")
+		symbol_picture_directory = os.path.join(self.projDir,self.symbol_sub_folder)
 		symbol_names = os.listdir(symbol_picture_directory)
 
 		print("symbol_names:", symbol_names)
 		print("output:",output)
 		#SAVE COUNTS AS .CSV FILE
-		self.csv_write(output, symbol_names,projDir)
+		self.csv_write(output, symbol_names,self.projDir)
 
 
 if __name__ == "__main__":

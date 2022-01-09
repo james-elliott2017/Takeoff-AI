@@ -7,11 +7,11 @@
 from AutoCount.AutocountMain import img_count
 from TextCount.TextExtractorMain import text_counter
 
-project = r"5645 SCVMC 115 ACD Basement"
+project = r"5672 Treasure Island Apartments"
 # division = r"Data_Floor" #text_extractor ONLY
 
-TEXT_FLAG = False
-AUTO_FLAG = True
+TEXT_FLAG = False #Text Based Counting
+AUTO_FLAG = True #convolutional counting via cv2
 PDF_TO_TEXT_FLAG = False
 
 ###LOAD PROJECT###
