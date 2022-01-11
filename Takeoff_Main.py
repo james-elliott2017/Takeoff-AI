@@ -7,11 +7,11 @@
 from AutoCount.AutocountMain import img_count
 from TextCount.TextExtractorMain import text_counter
 
-project = r"5672 Treasure Island Apartments"
+project = r"5605 Chicken Ranch Casino"
 # division = r"Data_Floor" #text_extractor ONLY
 
-TEXT_FLAG = False #Text Based Counting
-AUTO_FLAG = True #convolutional counting via cv2
+TEXT_FLAG = True #Text Based Counting
+AUTO_FLAG = False #convolutional counting via cv2
 PDF_TO_TEXT_FLAG = False
 
 ###LOAD PROJECT###
@@ -27,7 +27,8 @@ if AUTO_FLAG:
 if TEXT_FLAG:
 	#PDF_to_text --> save to output location
 	text_class = text_counter()
-	text_class.main_V2_allDivisions(project)
+	# text_class.textExtracMain(project,"AV Ceiling") ## OLD VERSION, WILL BE DELETED ONCE NEW HAS BEEN TESTED THOROUGHLY
+	text_class.main_V2_allDivisions(project) ##New Version
 
 ###OCR-Extractor###
 # coming soon

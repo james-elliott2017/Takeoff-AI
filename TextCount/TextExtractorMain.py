@@ -39,8 +39,8 @@ class text_variables():
 			print("JSON Found, loading found JSON")
 		except:
 			print("JSON Load Failed. Creating Empty JSON & Reloading")
-			# with open(self.json_path,'w') as f:
-			# 	json.dump({},f)
+			with open(self.json_path,'w') as f:
+				json.dump({},f)
 			constants = {}
 		return constants
 
@@ -100,7 +100,7 @@ class text_counter():
 		###LOCAL HARD PATHS###
 		self.project_dir = os.path.join(self.takeoffAI_root_dir,"Walker Projects")
 		self.MainExtractionFolder = r"TextExtractor_files"
-		self.text_folder = r"text_folder"
+		self.text_folder_local = r"text_folder"
 		self.csv_folder = r"csv_folder"
 		#Subfolders per Division
 		self.sub_folders = ["text_folder","csv_folder"]
@@ -146,7 +146,7 @@ class text_counter():
 			#if final_dictionary[page]
 		return final_dictionary
 
-	def __pdfExtractor(self,file):
+	def __pdfExtractor(self,file: str):
 		"""
 		Exports data as list and uppercase
 		"""
@@ -184,7 +184,7 @@ class text_counter():
 				if word.find(str1) == 0:
 						print(word)
 
-	def MainTextExtractor(self,csv_save_folder,searchable_list,ratio = False):
+	def MainTextExtractor(self,csv_save_folder: str,searchable_list: List[str],ratio: bool = False):
 		"""
 		main function to extract counts based on words searched for
 
@@ -195,13 +195,11 @@ class text_counter():
 			"mark" is the marking, can not be changed
 			"add term for each different 'key' to seperate multiple pages"
 		"""
-		#print("text FOLDER\n",self.text_folder)
-		files_list = os.listdir(self.text_folder)
-		print("txt Files list:",files_list)
+		files_list = os.listdir(self.text_folder_global)
 
 		total_counts = []
 		for file in files_list:
-			total_addy = self.text_folder + r"\\" + file
+			total_addy = self.text_folder_global + r"\\" + file
 			#print(total_addy)
 
 			#print(files_list)
@@ -253,7 +251,7 @@ class text_counter():
 		self.__csv_write(filtered_counts, self.header_default, csv_save_folder,csv_fileName=self.csv_default)
 		print("Counts Complete")
 
-	def divisionCreator(self,working_dir,division):
+	def divisionCreator(self,working_dir: str,division: str):
 		"""
 		Creates sub-division for text extraction (I.E. - AV,Low Voltage, Fire, Security, etc.)
 
@@ -266,7 +264,7 @@ class text_counter():
 			complete_path = os.path.join(path,folder)
 			os.mkdir(complete_path)
 
-	def textExtracMain(self,Project,division):
+	def textExtracMain(self,Project: str,division: str):
 		"""
 		Main program to run for text_extraction. Take the given project (must already be created via AutoCount)
 			and than creates division or visits that division and runs counts based on inputed text_files
@@ -299,7 +297,7 @@ class text_counter():
 
 
 		#.txt files location
-		self.text_folder = os.path.join(self.txtMainDir,division,self.text_folder)
+		self.text_folder_global = os.path.join(self.txtMainDir,division,self.text_folder_local)
 		 #.csv files location
 		self.csv_save_folder = os.path.join(self.txtMainDir,division,self.csv_folder)
 		try:
@@ -307,7 +305,7 @@ class text_counter():
 			#############################################
 			#Low Voltage
 			#print(Constants.words.LowVoltage)
-			keyWords = Constants.words.data # Change this to loading a .json
+			keyWords = Constants.words.AV_Ceiling # Change this to loading a .json
 				#load json, 'constants':[key_words]
 	################################################################################################################
 			self.MainTextExtractor(self.csv_save_folder,keyWords)
@@ -318,7 +316,7 @@ class text_counter():
 			#FINAL VERSION --- put self.divisionCreator() in same .py as project creator for organization
 			print("path created\nPlease Rerun Script")
 
-	def textExtracMain_V2_JSON(self,Project,division):
+	def textExtracMain_V2_JSON(self,Project: str,division: str) -> None:
 		"""Same as textExtracMain but uses JSON's to save and load constants data"""
 		#WORKING Directory for textExtraction files
 		self.txtMainDir = os.path.join(self.project_dir, Project ,self.MainExtractionFolder)
@@ -330,7 +328,8 @@ class text_counter():
 			pass
 		
 		# walker job folder setup .txt files location
-		self.text_folder = os.path.join(self.txtMainDir,division,self.text_folder)
+		self.text_folder_global = os.path.join(self.txtMainDir,division,self.text_folder_local)
+		x = os.path.join(self.txtMainDir,division)
 		# walker job folder .csv save location
 		self.csv_save_folder = os.path.join(self.txtMainDir,division,self.csv_folder)
 
@@ -354,6 +353,7 @@ class text_counter():
 		#loop through textExtracMain_V2_JSON
 		div_class = text_counter()
 		for div in all_divisions:
+			print(f"Division Start: {div}")
 			div_class.textExtracMain_V2_JSON(Project,div)
 
 def main_V2(project):
