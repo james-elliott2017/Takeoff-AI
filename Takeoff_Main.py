@@ -1,13 +1,14 @@
 #James Elliott
 #9/18/2020
-#__version__ == '2.0'
+#__version__ == '2.1'
 #Primary Script to all projects
-#FINAL VERSION --- put all calls here so that javascript can communicate with this file
+#FINAL VERSION --- put all calls here so that javascript/dJango can communicate with this file
 
 from AutoCount.AutocountMain import img_count
 from TextCount.TextExtractorMain import text_counter
+# from GoogleSearchAutomation import GSM #GoogleSearchManager import if you want to use webscraping functions
 
-project = r"5605 Chicken Ranch Casino"
+project = r"5674 GNE B38 AV"
 # division = r"Data_Floor" #text_extractor ONLY
 
 TEXT_FLAG = True #Text Based Counting
