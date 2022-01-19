@@ -1,6 +1,12 @@
 import webbrowser
 from typing import List
 from googlesearch import search
+from bs4 import BeautifulSoup
+import requests
+
+#new imports for trying to get dynamic loaded html
+import json
+import urllib
 
 class text_file_converter:
 	def __init__(self,txt_file_path) -> None:
@@ -11,7 +17,6 @@ class text_file_converter:
 		"""converts text file to list based on each row in the text file"""
 		strings = [line.rstrip() for line in self.text_file]
 		return strings
-
 
 class GoogleSearchManager:
 	def __init__(self) -> None:
@@ -27,6 +32,45 @@ class GoogleSearchManager:
 		for term in terms_list:
 			results.append(search(term,num_results=num_results))
 		return results
+
+class GoogleShopScraper(GoogleSearchManager):
+	def __init__(self,terms_list) -> None:
+		"""Primary class to search a Google Shopping Landing Page Url and Return a designated number of costs and titles."""
+		self.terms_list = terms_list
+		self.__create_urls()
+
+		self.CSS_selectors = ".HRLxBb, .rgHvZc" #selector for pricing...? --> Make sure google does NOT scramble
+	def __create_urls(self) -> None:
+		"""appends search terms into google shop url for webscraping"""
+		url = lambda term: f"https://www.google.com.tr/search?q={term}&tbm=shop"
+		self.urls = [url(term.replace(" ","%20")) for term in self.terms_list]
+	def __requests(self):
+		"""Returns Requests from Google Shop url searches"""
+		self.final_res = []
+		for url in self.urls:
+			res = requests.get(url)
+			res.encoding = "utf-8"
+			self.final_res.append(res)
+			assert res.status_code == 200
+	def __convert_to_soup(self):
+		self.soup_pages = [BeautifulSoup(result.content,"html.parser") for result in self.final_res]
+	def __filter_soup(self):
+		"""filters soup results from requests"""
+		self.items = [soup.select(self.CSS_selectors) for soup in self.soup_pages]
+	def extract_prices(self):
+		self.__requests()
+		self.__convert_to_soup()
+		self.__filter_soup()
+		# print(self.soup_pages[0])
+		print(self.items[0])
+		print(f"\n\n\n{self.items[1]}")
+
+
+
+def shop_main():
+	search_params = ['Crestron MPC3-102-B','crestron dm-tx-200-c-2g-w-t']
+	GSS = GoogleShopScraper(search_params)
+	GSS.extract_prices()
 
 def text_main():
 	file_path = r"S:\Shared Folders\Steven\Quotes\5600\5674 - GNE B38 AV Budget\Quote and Bid\James Automation Stuff\BOM.txt"
@@ -49,4 +93,13 @@ def GSM_main():
 
 
 if __name__ == '__main__':
-	GSM_main()
+	shop_main()
+	# To do List #
+	#1) Convert Notebook Code into Class Functions for sorting information
+	#2) Save in excel format with orginial google searches for ease of copy-paste
+	#-------------------------------------------------------------------------------------
+	#3) Write function to take highest 3 google prices & make them a column each for use.
+	#4) Make averaging of top 3-5 prices and use that one for final
+	#-------------------------------------------------------------------------------------
+	#5) Check and make sure google isn't changing the CSS Keys. Seems scrambed, but does the scramble change?
+	#6) Change Class for Single Use...? --> Or make it iteratable for varying sizes?
