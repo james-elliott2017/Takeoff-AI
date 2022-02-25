@@ -140,10 +140,18 @@ class calculations(load_csv):#job number specific
 		super().__init__(csv_path)
 
 def test_main():
+	# all of this can be found in a Jupyter Notebook Labled dataset_playground.ipynb
 	data_path = r"S:\Personal Folders\Databases\Cleaned_Dataset_testing.csv"
 	job = 4670
 	calcs = calculations(data_path)
-	calcs.sum(job,"fiber_terminated")
+	results = pd_multi_column(calcs.dataset,non_zeros=True)
+	jobs = results.view_jobs()
+	cols_to_calculate = ['fiber_terminated','fiber_roughed_FT','copper_terminated','copper_test_label','copper_cables_roughed']
+	hrs_col = 'crew_total_daily_hours'
+	values,units = results.all_multimask(labor_columns=cols_to_calculate,hours_col=hrs_col)
+
+	for item in values:
+    		print(f"{item}: {values[item]} {units}")
 
 if __name__ == '__main__':
 	test_main()
