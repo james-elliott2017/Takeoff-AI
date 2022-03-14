@@ -8,4 +8,4 @@ C:/Users/james/anaconda3/envs/walker/python.exe "c:/Users/james/OneDrive/Documen
 CALL conda deactivate
 
 echo "FastDaily Organizer Complete"
-cmd /k
+REM cmd /k
