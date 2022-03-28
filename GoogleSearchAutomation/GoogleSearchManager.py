@@ -21,7 +21,7 @@ class text_file_converter:
 class GoogleSearchManager:
 	def __init__(self) -> None:
 		pass
-	def search_urls(self,terms_list: str) -> None:
+	def search_urls(self,terms_list: List[str]) -> None:
 		"""google search and open url tab for list of strings to search"""
 		for term in terms_list:
 			url = f"https://www.google.com.tr/search?q={term}"
