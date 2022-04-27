@@ -8,11 +8,11 @@ from AutoCount.AutocountMain import img_count
 from TextCount.TextExtractorMain import text_counter
 # from GoogleSearchAutomation import GSM #GoogleSearchManager import if you want to use webscraping functions
 
-project = r"5678 Brentwood Elementary"
-# division = r"Data_Floor" #text_extractor ONLY
+project = r"5690 Union Sanitation"
+# division = r"Data_Floor" #text_extractor ONLY --> Version 1
 
-TEXT_FLAG = False #Text Based Counting
-AUTO_FLAG = True #convolutional counting via cv2
+TEXT_FLAG = True #Text Based Counting
+AUTO_FLAG = False #convolutional counting via cv2
 PDF_TO_TEXT_FLAG = False
 
 ###LOAD PROJECT###

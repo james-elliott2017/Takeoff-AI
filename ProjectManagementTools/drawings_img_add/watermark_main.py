@@ -127,12 +127,12 @@ def test_func():
 def watermark_main(input_pdf):
 	wMark = watermark(img_type=1) #0 for horizontal, 1 for vertical
 	#USE MS PAINT FOR PIXEL LOCATIONS
-	x,y = (2700,280) ##LOGO POSITION (top left corner)
+	x,y = (2750,280) ##LOGO POSITION (top left corner)
 	w,h = wMark.get_img_dims(wMark.img_logo)
-	w,h = (219,1045)
+	w,h = (219,975)
 	#whiteout area on left
-	wht_x,wht_y = (2625,275) #top_left corner
-	white_size = (450,1147)
+	wht_x,wht_y = (2675,275) #top_left corner
+	white_size = (450,1050)
 
 	white_box = fitz.Rect(wht_x,wht_y,wht_x+white_size[0],wht_y+white_size[1])
 	logo_box = fitz.Rect(x,y,x+w,y+h)
@@ -144,5 +144,5 @@ def watermark_main(input_pdf):
 	print("Walker Insert Complete")
 
 if __name__ == '__main__':
-	input_pdf = r"S:\Shared Folders\John\Quotes\5400 - John\5416 SCVMC Bldg M GI & Bronch\Submittals\Shop Drawings\RAW_08_20_2021_Drawings.pdf"
+	input_pdf = r"S:\Shared Folders\Steven\Quotes\5600\5669 - SCVMC Technology Pachage - Fiber Infrastructure\Drawings & Specs\C) Drawings\Walker - Bid Set Design Edits (James).pdf"
 	watermark_main(input_pdf)
