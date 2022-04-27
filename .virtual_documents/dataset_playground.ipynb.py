@@ -42,4 +42,10 @@ zero = tmp.loc[0,'copper_terminated']
 NaN = tmp.loc[2,'copper_terminated']
 
 
+text_path = r"C:\Users\james\OneDrive\Documents\Coding Projects\Python Projects\Takeoff AI\Walker Projects\5690 Union Sanitation\Misc_Files\Key word search text\AV.txt"
 
+
+with open(text_path,"r") as f:
+    txt = f.read()
+text_list = txt.splitlines()
+text_list
