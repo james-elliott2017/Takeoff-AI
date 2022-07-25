@@ -8,7 +8,7 @@ from AutoCount.AutocountMain import img_count
 from TextCount.TextExtractorMain import text_counter
 # from GoogleSearchAutomation import GSM #GoogleSearchManager import if you want to use webscraping functions
 
-project = r"5690 Union Sanitation"
+project = r"5697 Dell Fire Department Renovation"
 # division = r"Data_Floor" #text_extractor ONLY --> Version 1
 
 TEXT_FLAG = True #Text Based Counting

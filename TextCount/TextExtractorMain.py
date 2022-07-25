@@ -2,14 +2,23 @@
 #pdf_extractor
 
 import os
+import glob
 import shutil
 import pandas as pd
 import json
-from typing import List
+from typing import List,Iterable,Union
+from dataclasses import dataclass
+import warnings
 
 class JSON_EditError(Exception):
 	def __init__(self,json_path: str):
 		super().__init__(f"Json file either has empty division, does not exists, or is corrupted. Please update JSON file:\n{json_path}")
+class Empty_Section(Warning):
+	def __init__(self,section: str):
+		self.message = f"The below text section was found empty and skipped. If you meant to count Section:{section}. \
+		Please make sure to add text files and rerun."
+	def __str__(self):
+		return repr(self.message)
 
 class create_default_json:
 	def __init__(self):
@@ -90,7 +99,89 @@ class text_variables():
 			self.save_json()
 			raise JSON_EditError(self.json_path)
 
-class text_counter():
+@dataclass
+class TextConstants:
+	#Root Directory for TakeoffAI
+	takeoff_AI_root_dir: str = r"C:\Users\james\OneDrive\Documents\Coding Projects\Python Projects\Takeoff AI"
+	###LOCAL HARD PATHS from root dir###
+	project_folder: str = "Walker Projects"
+	project_dir: str = os.path.join(takeoff_AI_root_dir,project_folder)
+	MainExtractionFolder: str = r"TextExtractor_files"
+	text_folder_local: str = r"text_folder"
+	csv_folder: str = r"csv_folder"
+
+	#Helper Constants for text_counter()
+	sub_folders: Iterable[str] = ("text_folder","csv_folder")
+
+	#.CSV Save Information
+	csv_default: str = "Total_Counts.csv"
+	header_default: str = "Total Counts"
+
+	#CombineCounts Constants
+	summation_file_name = ("Total_Counts.csv",)
+	combined_file_name = "Combined_Counts_Final.csv"
+
+
+#Added after version to 2 help create a summary .csv for ease-of-use.
+class CombineCounts(TextConstants):
+	def __init__(self,csv_folder: str)->None:
+		"""Runs at a folder level. 
+		
+		Import Note: Must be run each time a list of .csv files need to be combined."""
+		self.working_dir = csv_folder
+	@staticmethod
+	def __grab_csv_counts(dataframe: pd.DataFrame)->List[Union[int,float]]:
+		"""takes the counts column and joins as a new row to be concatenated later"""
+		information = list(dataframe.iloc[:,1])
+		return information
+
+	@staticmethod
+	def ___grab_column_names(dataframe:pd.DataFrame,add_file_col: bool = True)->pd.DataFrame:
+		"""Function grabs column names to be used for a specific devision
+		add_file_name: creates a column name to be filled with a file name. Great when combining files and file name tracks something."""
+		column_names = []
+		if add_file_col:
+			column_names.append("File Name")
+		column_names.extend(dataframe.iloc[:,0].unique())
+		return column_names
+
+	def main(self,save: bool = True,add_file_col: bool = True,files_to_ignore: Iterable[str] = TextConstants.summation_file_name)->None:
+		"""Loops through files appending each file as a row in a new .csv file"""
+		#file_names = self.grab_csv_file_names()
+		#grab files in path
+		files = os.path.join(self.working_dir,"*.csv")
+		#combine files
+		files = glob.glob(files)
+		# Files to Remove
+		files = [f for f in files if os.path.basename(f) not in files_to_ignore]
+		#Create Shared Column Names
+		first_csv = files[0]
+		shared_column_names = self.___grab_column_names(pd.read_csv(first_csv),add_file_col=add_file_col)
+		#Create Combined Counts
+		df = pd.DataFrame(columns=shared_column_names)
+		for fx in files:
+			new_row = []
+			#add file name first if wanted
+			if add_file_col:
+				current_file_name = os.path.basename(fx)
+				new_row.append(current_file_name)
+			
+			# Extract information from current csv
+			current_frame = pd.read_csv(fx)
+			new_row.extend(self.__grab_csv_counts(current_frame))
+			#Add new row
+			df.loc[len(df.index)] = new_row
+
+		if save:
+			save_path = os.path.join(self.working_dir,TextConstants.combined_file_name)
+			df.to_csv(save_path)
+		print("Counts Combined Completed")
+			
+
+		
+
+
+class text_counter(TextConstants):
 	def __init__(self,
 	takeoff_AI_root_dir = r"C:\Users\james\OneDrive\Documents\Coding Projects\Python Projects\Takeoff AI"
 	):
@@ -98,16 +189,16 @@ class text_counter():
 		#^ROOT PROJECT DIRECTORY---CHANGE THIS!!!^#
 
 		###LOCAL HARD PATHS###
-		self.project_dir = os.path.join(self.takeoffAI_root_dir,"Walker Projects")
-		self.MainExtractionFolder = r"TextExtractor_files"
-		self.text_folder_local = r"text_folder"
-		self.csv_folder = r"csv_folder"
+		self.project_dir = TextConstants.project_dir
+		self.MainExtractionFolder = TextConstants.MainExtractionFolder
+		self.text_folder_local = TextConstants.text_folder_local
+		self.csv_folder = TextConstants.csv_folder
 		#Subfolders per Division
-		self.sub_folders = ["text_folder","csv_folder"]
+		self.sub_folders = TextConstants.sub_folders
 
 		#.CSV Save Information
-		self.csv_default = "Total_Counts.csv"
-		self.header_default = "Total Counts"
+		self.csv_default = TextConstants.csv_default
+		self.header_default = TextConstants.header_default
 	def __repr__(self):
 		self.name = "text_counter()"
 		return "{} class instance".format(self.name)
@@ -340,6 +431,12 @@ class text_counter():
 
 		#run text counter
 		self.MainTextExtractor(self.csv_save_folder,keyWords)
+
+		# Combine Counts Into Single File
+		try:
+			CombineCounts(self.csv_save_folder).main()
+		except:
+			warnings.warn(division,Empty_Section)
 	def main_V2_allDivisions(self,Project):
 		"""same as textExtractMain_V2_JSON, but loops through all divisions"""
 		#WORKING Directory for textExtraction files
@@ -375,5 +472,5 @@ def main_V2_w_PDFtoTxt(project:str,rectangle,save_dir,input_pdf,output_txt = r"o
 	pass
 
 if __name__ == "__main__":
-	project = r"6082 Sunnyville Civic Center"
+	project = r"5697 Dell Fire Department Renovation"
 	main_V2(project)
